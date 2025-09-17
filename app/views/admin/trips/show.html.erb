@@ -1,0 +1,455 @@
+<% content_for :title, "#{@trip.name} - Admin" %>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol role="list" class="flex items-center space-x-4">
+        <li>
+          <%= link_to admin_root_path, class: "text-gray-400 hover:text-gray-500" do %>
+            <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 10.5v6.25A2.25 2.25 0 0114.75 19h-1.5A2.25 2.25 0 0111 16.75v-4.5A.75.75 0 0111.75 12h1.5a.75.75 0 01.75.75v4.5a.75.75 0 00.75.75h1.5a.75.75 0 00.75-.75V10.5a1 1 0 01.293-.707l7-7a1 1 0 011.414 1.414L10.707 11.5H16a1 1 0 010 2H9.707l6.586 6.586a1 1 0 11-1.414 1.414l-7-7A1 1 0 018.586 13H3a1 1 0 010-2h5.586L2 4.414A1 1 0 013.414 3l7 7z" clip-rule="evenodd" />
+            </svg>
+            <span class="sr-only">Admin</span>
+          <% end %>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to "Trips", admin_trips_path, class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-4 text-sm font-medium text-gray-500"><%= @trip.name %></span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="min-w-0 flex-1">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <%= @trip.name %>
+        </h2>
+        <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+          <div class="mt-2 flex items-center text-sm text-gray-500">
+            <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clip-rule="evenodd" />
+            </svg>
+            <%= @trip.start_date.strftime("%B %d") %> - <%= @trip.end_date.strftime("%B %d, %Y") %>
+          </div>
+          <div class="mt-2 flex items-center text-sm text-gray-500">
+            <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.646 7.584.829.8 1.654 1.381 2.274 1.765a11.798 11.798 0 00.757.433 5.707 5.707 0 00.281.14l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
+            </svg>
+            <%= @trip.location %>
+          </div>
+          <div class="mt-2 flex items-center text-sm text-gray-500">
+            <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.78.78 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96c.023.222.014.442-.026.654zM18 8a2 2 0 11-4 0 2 2 0 014 0zM5.304 16.19a.844.844 0 01-.277-.71 5 5 0 019.947 0 .843.843 0 01-.277.71A6.975 6.975 0 0110 18a6.974 6.974 0 01-4.696-1.81z" />
+            </svg>
+            <%= @registered_users.count %> registered
+          </div>
+        </div>
+        <% if @trip.description.present? %>
+          <div class="mt-4">
+            <div class="markdown-content text-gray-600"><%= render_markdown(@trip.description).html_safe %></div>
+          </div>
+        <% end %>
+      </div>
+      <div class="mt-4 flex md:ml-4 md:mt-0 space-x-3">
+        <%= link_to "Edit Trip", edit_admin_trip_path(@trip),
+            class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+        <%= link_to "View Public", trip_path(@trip),
+            class: "inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trip Overview Cards -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+    <!-- Accommodations -->
+    <div class="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-200">
+      <div class="p-5">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m2.25-18v18m13.5-18v18m2.25-18v18M6.75 9h.75v.75h-.75V9zm0 3h.75v.75h-.75V12zm0 3h.75v.75h-.75V15zm3-6h.75v.75h-.75V9zm0 3h.75v.75h-.75V12zm0 3h.75v.75h-.75V15z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Accommodations</dt>
+              <dd class="text-lg font-medium text-gray-900"><%= @accommodations.count %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Golf Rounds -->
+    <div class="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-200">
+      <div class="p-5">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Golf Rounds</dt>
+              <dd class="text-lg font-medium text-gray-900"><%= @golf_rounds.count %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Betting Pools -->
+    <div class="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-200">
+      <div class="p-5">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Betting Pools</dt>
+              <dd class="text-lg font-medium text-gray-900"><%= @betting_pools.count %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Cost -->
+    <div class="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-200">
+      <div class="p-5">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <dt class="text-sm font-medium text-gray-500 truncate">Total Cost</dt>
+              <dd class="text-lg font-medium text-gray-900">$<%= number_with_precision(@trip.total_cost, precision: 2) %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Management Sections -->
+  <div class="space-y-8">
+    <!-- Accommodations Section -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Accommodations</h3>
+        <%= link_to "Add Accommodation", new_admin_trip_accommodation_path(@trip),
+            class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" %>
+      </div>
+      <div class="p-6">
+        <% if @accommodations.any? %>
+          <div class="space-y-6">
+            <% @accommodations.each do |accommodation| %>
+              <div class="border border-gray-200 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h4 class="text-lg font-medium text-gray-900"><%= accommodation.name %></h4>
+                    <p class="text-sm text-gray-500">
+                      <%= accommodation.accommodation_type.titleize %> •
+                      <%= accommodation.rooms.count %> room<%= accommodation.rooms.count == 1 ? '' : 's' %>
+                    </p>
+                  </div>
+                  <div class="flex space-x-2">
+                    <%= link_to "Manage Rooms", admin_trip_accommodation_path(@trip, accommodation),
+                        class: "text-purple-600 hover:text-purple-900 text-sm font-medium" %>
+                    <%= link_to "Edit", edit_admin_trip_accommodation_path(@trip, accommodation),
+                        class: "text-blue-600 hover:text-blue-900 text-sm font-medium" %>
+                  </div>
+                </div>
+
+                <% if accommodation.rooms.any? %>
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <% accommodation.rooms.each do |room| %>
+                      <div class="bg-gray-50 p-3 rounded-md">
+                        <div class="flex justify-between items-start">
+                          <div>
+                            <p class="font-medium text-gray-900"><%= room.name %></p>
+                            <p class="text-xs text-gray-500"><%= room.beds_description %></p>
+                            <p class="text-sm text-gray-700">$<%= number_with_precision(room.cost_per_person, precision: 2) %> per person</p>
+                          </div>
+                          <span class="text-xs text-gray-500">Cap: <%= room.capacity %></span>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <p class="text-gray-500 text-sm">No rooms configured yet.</p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0h3m2 0h5" />
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No accommodations</h3>
+            <p class="mt-1 text-sm text-gray-500">Get started by adding a hotel or house.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Golf Schedule Section -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Golf Schedule</h3>
+        <%= link_to "Add Golf Round", new_admin_trip_golf_round_path(@trip),
+            class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+      </div>
+      <div class="p-6">
+        <% if @golf_rounds.any? %>
+          <div class="space-y-4">
+            <% @golf_rounds.each do |round| %>
+              <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <h4 class="font-semibold text-gray-900"><%= round.course&.name || round.course_name %></h4>
+                  <p class="text-sm text-gray-500">
+                    <% if round.tee_time %>
+                      <%= round.tee_time.strftime("%A, %B %d at %I:%M %p") %>
+                    <% end %>
+                  </p>
+                </div>
+                <div class="text-right">
+                  <div class="text-lg font-bold text-green-600">$<%= number_with_precision(round.cost_per_person, precision: 0) %></div>
+                  <div class="text-xs text-gray-500">per person</div>
+                </div>
+                <div class="flex space-x-2">
+                  <%= link_to "Edit", edit_admin_trip_golf_round_path(@trip, round),
+                      class: "text-blue-600 hover:text-blue-900 text-sm font-medium" %>
+                  <%= link_to "Delete", admin_trip_golf_round_path(@trip, round),
+                      method: :delete,
+                      class: "text-red-600 hover:text-red-900 text-sm font-medium",
+                      data: {
+                        "turbo-method": "delete",
+                        confirm: "Are you sure you want to delete this golf round?"
+                      } %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No golf rounds scheduled</h3>
+            <p class="mt-1 text-sm text-gray-500">Add golf courses and tee times for the trip.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Betting Pools Section -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Betting Pools</h3>
+        <%= link_to "Add Betting Pool", new_admin_trip_betting_pool_path(@trip),
+            class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      </div>
+      <div class="p-6">
+        <% if @betting_pools.any? %>
+          <div class="space-y-4">
+            <% @betting_pools.each do |pool| %>
+              <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div class="flex-1">
+                  <h4 class="font-semibold text-gray-900"><%= pool.name %></h4>
+                  <p class="text-sm text-gray-600"><%= pool.description %></p>
+                </div>
+                <div class="text-right mr-4">
+                  <div class="text-lg font-bold text-blue-600">$<%= number_with_precision(pool.entry_fee || pool.cost_per_person, precision: 0) %></div>
+                  <div class="text-xs text-gray-500">per person</div>
+                </div>
+                <div class="flex space-x-2">
+                  <%= link_to "Edit", edit_admin_trip_betting_pool_path(@trip, pool),
+                      class: "text-blue-600 hover:text-blue-900 text-sm font-medium" %>
+                  <%= link_to "Delete", admin_trip_betting_pool_path(@trip, pool),
+                      method: :delete,
+                      class: "text-red-600 hover:text-red-900 text-sm font-medium",
+                      data: {
+                        "turbo-method": "delete",
+                        confirm: "Are you sure you want to delete this betting pool?"
+                      } %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No betting pools</h3>
+            <p class="mt-1 text-sm text-gray-500">Add betting games like skins, team bets, and challenges.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Registered Users with Deposit Tracking -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">Registered Users (<%= @registered_users.count %>)</h3>
+          <% if @trip.requires_deposit? %>
+            <p class="text-sm text-gray-500 mt-1">
+              Deposit Amount: $<%= number_with_precision(@trip.deposit_amount, precision: 2) %>
+              • Paid: <%= @trip.users_with_paid_deposits.count %>/<%= @registered_users.count %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      <div class="p-6">
+        <% if @trip_registrations.any? %>
+          <% if @trip.requires_deposit? %>
+            <!-- Table view for deposits -->
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      User
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Room
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Deposit Status
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Confirmed By
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <% @trip_registrations.each do |registration| %>
+                    <tr class="hover:bg-gray-50">
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <div>
+                          <p class="text-sm font-medium text-gray-900"><%= registration.user.full_name %></p>
+                          <p class="text-xs text-gray-500"><%= registration.user.email %></p>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% user_room = registration.user.room_for_trip(@trip) %>
+                        <% if user_room %>
+                          <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            <%= user_room.name %>
+                          </span>
+                        <% else %>
+                          <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            No Room
+                          </span>
+                        <% end %>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% if registration.deposit_paid? %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-green-700">Paid</span>
+                          </div>
+                          <% if registration.deposit_paid_date.present? %>
+                            <p class="text-xs text-gray-500 mt-1">
+                              <%= registration.deposit_paid_date.strftime("%m/%d/%Y") %>
+                            </p>
+                          <% end %>
+                        <% else %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-yellow-700">Pending</span>
+                          </div>
+                        <% end %>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% if registration.deposit_confirmed_by.present? %>
+                          <p class="text-xs text-gray-600"><%= registration.deposit_confirmed_by.full_name %></p>
+                        <% else %>
+                          <p class="text-xs text-gray-400">—</p>
+                        <% end %>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% if registration.deposit_paid? %>
+                          <%= link_to "Unconfirm", unconfirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "text-xs text-red-600 hover:text-red-900" %>
+                        <% else %>
+                          <%= link_to "Confirm Deposit", confirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "text-xs text-green-600 hover:text-green-900 font-medium" %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <!-- Simple grid view when no deposit required -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <% @registered_users.each do |user| %>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <p class="font-medium text-gray-900"><%= user.full_name %></p>
+                    <p class="text-sm text-gray-500"><%= user.email %></p>
+                    <p class="text-xs text-gray-400">Handicap: <%= user.handicap %></p>
+                  </div>
+                  <% user_room = user.room_for_trip(@trip) %>
+                  <% if user_room %>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <%= user_room.name %>
+                    </span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      No Room
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No registrations yet</h3>
+            <p class="mt-1 text-sm text-gray-500">Users will appear here after they register for the trip.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

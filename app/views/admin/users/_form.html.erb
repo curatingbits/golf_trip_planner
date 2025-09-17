@@ -1,0 +1,145 @@
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+  <!-- First Name -->
+  <div>
+    <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :first_name,
+          class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+          placeholder: "John" %>
+    </div>
+    <% if user.errors[:first_name].any? %>
+      <p class="mt-2 text-sm text-red-600"><%= user.errors[:first_name].first %></p>
+    <% end %>
+  </div>
+
+  <!-- Last Name -->
+  <div>
+    <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :last_name,
+          class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+          placeholder: "Doe" %>
+    </div>
+    <% if user.errors[:last_name].any? %>
+      <p class="mt-2 text-sm text-red-600"><%= user.errors[:last_name].first %></p>
+    <% end %>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.email_field :email,
+          class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+          placeholder: "john.doe@example.com" %>
+    </div>
+    <% if user.errors[:email].any? %>
+      <p class="mt-2 text-sm text-red-600"><%= user.errors[:email].first %></p>
+    <% end %>
+  </div>
+
+  <!-- Handicap -->
+  <div>
+    <%= form.label :handicap, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.number_field :handicap,
+          step: 0.1,
+          min: 0,
+          max: 54,
+          class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+          placeholder: "15.5" %>
+    </div>
+    <p class="mt-1 text-xs text-gray-500">Golf handicap (0-54)</p>
+    <% if user.errors[:handicap].any? %>
+      <p class="mt-2 text-sm text-red-600"><%= user.errors[:handicap].first %></p>
+    <% end %>
+  </div>
+
+  <!-- Admin Status -->
+  <div class="sm:col-span-2">
+    <div class="flex items-start">
+      <div class="flex items-center h-5">
+        <%= form.check_box :admin,
+            class: "focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded",
+            disabled: (user == current_user) %>
+      </div>
+      <div class="ml-3 text-sm">
+        <%= form.label :admin, "Administrator", class: "font-medium text-gray-700" %>
+        <p class="text-gray-500">Grant this user administrative privileges</p>
+        <% if user == current_user %>
+          <p class="text-xs text-yellow-600 mt-1">You cannot change your own admin status</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Password Section (only for new users or if changing password) -->
+  <% if user.new_record? || params[:reset_password] %>
+    <div class="sm:col-span-2 border-t pt-6">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <%= user.new_record? ? "Set Password" : "Reset Password" %>
+      </h3>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <!-- Password -->
+        <div>
+          <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.password_field :password,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "••••••••" %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Minimum 6 characters</p>
+          <% if user.errors[:password].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= user.errors[:password].first %></p>
+          <% end %>
+        </div>
+
+        <!-- Password Confirmation -->
+        <div>
+          <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.password_field :password_confirmation,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "••••••••" %>
+          </div>
+          <% if user.errors[:password_confirmation].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= user.errors[:password_confirmation].first %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% elsif user.persisted? %>
+    <div class="sm:col-span-2 border-t pt-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-medium text-gray-900">Password</h3>
+          <p class="text-sm text-gray-500">Password is set and encrypted</p>
+        </div>
+        <%= link_to "Reset Password", edit_admin_user_path(user, reset_password: true),
+            class: "inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- User Statistics (only for existing users) -->
+  <% if user.persisted? %>
+    <div class="sm:col-span-2 border-t pt-6">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">User Statistics</h3>
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Trips Registered</dt>
+          <dd class="mt-1 text-2xl font-semibold text-gray-900"><%= user.trips.count %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Room Reservations</dt>
+          <dd class="mt-1 text-2xl font-semibold text-gray-900"><%= user.room_reservations.count %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Member Since</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= user.created_at.strftime("%B %d, %Y") %></dd>
+        </div>
+      </dl>
+    </div>
+  <% end %>
+</div>
