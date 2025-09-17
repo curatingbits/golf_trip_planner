@@ -1,0 +1,73 @@
+<% content_for :title, "Sign In - Golf Trip Planner" %>
+
+<div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="flex justify-center">
+      <svg class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+      </svg>
+    </div>
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+      Golf Trip Planner
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      Sign in to manage your golf trips
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow-xl sm:rounded-lg sm:px-10 border border-gray-200">
+      <%= form_with url: login_path, method: :post, local: true, class: "space-y-6" do |form| %>
+        <div>
+          <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.email_field :email,
+                autocomplete: "email",
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "Enter your email address" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.password_field :password,
+                autocomplete: "current-password",
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "Enter your password" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.submit "Sign In",
+              class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300" />
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">Demo Accounts</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-3">
+          <div class="bg-gray-50 p-3 rounded-md">
+            <p class="text-xs font-medium text-gray-700">Admin Access:</p>
+            <p class="text-xs text-gray-600">admin@golftrip.com / password123</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-md">
+            <p class="text-xs font-medium text-gray-700">Golfer Access:</p>
+            <p class="text-xs text-gray-600">duggan.roberts@golftrip.com / password123</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

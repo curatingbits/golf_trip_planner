@@ -1,0 +1,225 @@
+<% content_for :title, "Edit Room #{@room.room_number} - Admin" %>
+
+<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol role="list" class="flex items-center space-x-4">
+        <li>
+          <%= link_to admin_root_path, class: "text-gray-400 hover:text-gray-500" do %>
+            <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 10.5v6.25A2.25 2.25 0 0114.75 19h-1.5A2.25 2.25 0 0111 16.75v-4.5A.75.75 0 0111.75 12h1.5a.75.75 0 01.75.75v4.5a.75.75 0 00.75.75h1.5a.75.75 0 00.75-.75V10.5a1 1 0 01.293-.707l7-7a1 1 0 011.414 1.414L10.707 11.5H16a1 1 0 010 2H9.707l6.586 6.586a1 1 0 11-1.414 1.414l-7-7A1 1 0 018.586 13H3a1 1 0 010-2h5.586L2 4.414A1 1 0 013.414 3l7 7z" clip-rule="evenodd" />
+            </svg>
+            <span class="sr-only">Admin</span>
+          <% end %>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to "Trips", admin_trips_path, class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to @trip.name, admin_trip_path(@trip), class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to @accommodation.name, admin_trip_accommodation_path(@trip, @accommodation), class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-4 text-sm font-medium text-gray-500">Edit Room <%= @room.room_number %></span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="mt-4">
+      <h1 class="text-3xl font-bold text-gray-900">Edit Room <%= @room.room_number %></h1>
+      <p class="mt-2 text-gray-600">Update room details, capacity, and pricing.</p>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="bg-white shadow-lg rounded-lg border border-gray-200">
+    <%= form_with model: [:admin, @trip, @accommodation, @room], local: true, class: "space-y-6" do |form| %>
+      <div class="px-6 py-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <!-- Room Number -->
+          <div>
+            <%= form.label :room_number, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_field :room_number,
+                  class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "e.g., 101, A, Master" %>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Room identifier or number</p>
+            <% if @room.errors[:room_number].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @room.errors[:room_number].first %></p>
+            <% end %>
+          </div>
+
+          <!-- Room Type -->
+          <div>
+            <%= form.label :room_type, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.select :room_type,
+                  options_for_select([
+                    ['Standard Room', 'standard'],
+                    ['Deluxe Room', 'deluxe'],
+                    ['Suite', 'suite'],
+                    ['Master Bedroom', 'master'],
+                    ['Guest Bedroom', 'guest'],
+                    ['Shared Room', 'shared'],
+                    ['Single Room', 'single'],
+                    ['Double Room', 'double']
+                  ], @room.room_type),
+                  { prompt: 'Select room type (optional)' },
+                  { class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" } %>
+            </div>
+            <% if @room.errors[:room_type].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @room.errors[:room_type].first %></p>
+            <% end %>
+          </div>
+
+          <!-- Capacity -->
+          <div>
+            <%= form.label :capacity, "Capacity (people)", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.number_field :capacity,
+                  min: 1,
+                  max: 10,
+                  class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "2" %>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Maximum number of people this room can accommodate</p>
+            <% if @room.errors[:capacity].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @room.errors[:capacity].first %></p>
+            <% end %>
+          </div>
+
+          <!-- Cost Per Person -->
+          <div>
+            <%= form.label :cost_per_person, "Cost Per Person ($)", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <%= form.number_field :cost_per_person,
+                  step: 0.01,
+                  class: "appearance-none block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "0.00" %>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Cost per person for this room for the entire stay</p>
+            <% if @room.errors[:cost_per_person].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @room.errors[:cost_per_person].first %></p>
+            <% end %>
+          </div>
+
+          <!-- Description -->
+          <div class="sm:col-span-2">
+            <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_area :description,
+                  rows: 3,
+                  class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "Describe room features, amenities, bed configuration, etc..." %>
+            </div>
+            <% if @room.errors[:description].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @room.errors[:description].first %></p>
+            <% end %>
+          </div>
+
+          <!-- Cost Preview -->
+          <div class="sm:col-span-2 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-sm font-medium text-gray-900 mb-2">Cost Preview</h4>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span class="text-gray-500">Cost per person:</span>
+                <span class="font-medium text-gray-900" id="cost-per-person-preview">$<%= number_with_precision(@room.cost_per_person || 0, precision: 2) %></span>
+              </div>
+              <div>
+                <span class="text-gray-500">Total room cost:</span>
+                <span class="font-medium text-gray-900" id="total-room-cost-preview">$<%= number_with_precision((@room.cost_per_person || 0) * (@room.capacity || 0), precision: 2) %></span>
+              </div>
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Total room cost = Cost per person × Capacity</p>
+          </div>
+
+          <!-- Current Reservations Warning -->
+          <% if @room.room_reservations.any? %>
+            <div class="sm:col-span-2 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-yellow-800">Room has existing reservations</h3>
+                  <div class="mt-2 text-sm text-yellow-700">
+                    <p>This room currently has <%= @room.room_reservations.count %> reservation(s). Reducing the capacity below the current number of reservations may cause issues.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
+        <div>
+          <%= link_to "Cancel", admin_trip_accommodation_path(@trip, @accommodation),
+              class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+        </div>
+        <div class="space-x-3">
+          <%= link_to "Delete Room", admin_trip_accommodation_room_path(@trip, @accommodation, @room),
+              method: :delete,
+              class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500",
+              data: {
+                "turbo-method": "delete",
+                confirm: "Are you sure you want to delete this room? This action cannot be undone and will remove all associated reservations."
+              } %>
+          <%= form.submit "Update Room",
+              class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const costPerPersonField = document.getElementById('room_cost_per_person');
+  const capacityField = document.getElementById('room_capacity');
+  const costPerPersonPreview = document.getElementById('cost-per-person-preview');
+  const totalRoomCostPreview = document.getElementById('total-room-cost-preview');
+
+  function updateCostPreview() {
+    const costPerPerson = parseFloat(costPerPersonField.value) || 0;
+    const capacity = parseInt(capacityField.value) || 0;
+    const totalCost = costPerPerson * capacity;
+
+    costPerPersonPreview.textContent = '$' + costPerPerson.toFixed(2);
+    totalRoomCostPreview.textContent = '$' + totalCost.toFixed(2);
+  }
+
+  costPerPersonField.addEventListener('input', updateCostPreview);
+  capacityField.addEventListener('input', updateCostPreview);
+});
+</script>

@@ -1,0 +1,181 @@
+<% content_for :title, "Betting Pools for #{@trip.name} - Admin" %>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol role="list" class="flex items-center space-x-4">
+        <li>
+          <%= link_to admin_root_path, class: "text-gray-400 hover:text-gray-500" do %>
+            <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 10.5v6.25A2.25 2.25 0 0114.75 19h-1.5A2.25 2.25 0 0111 16.75v-4.5A.75.75 0 0111.75 12h1.5a.75.75 0 01.75.75v4.5a.75.75 0 00.75.75h1.5a.75.75 0 00.75-.75V10.5a1 1 0 01.293-.707l7-7a1 1 0 011.414 1.414L10.707 11.5H16a1 1 0 010 2H9.707l6.586 6.586a1 1 0 11-1.414 1.414l-7-7A1 1 0 018.586 13H3a1 1 0 010-2h5.586L2 4.414A1 1 0 013.414 3l7 7z" clip-rule="evenodd" />
+            </svg>
+            <span class="sr-only">Admin</span>
+          <% end %>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to "Trips", admin_trips_path, class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to @trip.name, admin_trip_path(@trip), class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-4 text-sm font-medium text-gray-500">Betting Pools</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="mt-4 md:flex md:items-center md:justify-between">
+      <div class="min-w-0 flex-1">
+        <h1 class="text-3xl font-bold text-gray-900">Betting Pools</h1>
+        <p class="mt-2 text-gray-600">Manage betting pools and side games for <%= @trip.name %></p>
+      </div>
+      <div class="mt-4 flex md:ml-4 md:mt-0">
+        <%= link_to "Add Betting Pool", new_admin_trip_betting_pool_path(@trip),
+            class: "inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Betting Pools List -->
+  <% if @betting_pools.any? %>
+    <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+      <% @betting_pools.each do |betting_pool| %>
+        <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900"><%= betting_pool.name %></h3>
+                <div class="mt-1 flex items-center space-x-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                    <% case betting_pool.pool_type
+                       when 'team_bet' %>
+                         bg-blue-100 text-blue-800
+                    <% when 'skins' %>
+                         bg-purple-100 text-purple-800
+                    <% when 'twos' %>
+                         bg-orange-100 text-orange-800
+                    <% else %>
+                         bg-gray-100 text-gray-800
+                    <% end %>">
+                    <%= betting_pool.pool_type.humanize %>
+                  </span>
+                  <span class="text-sm text-gray-500">
+                    <%= betting_pool.betting_participations.count %> participants
+                  </span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-lg font-semibold text-gray-900">
+                  $<%= number_with_precision(betting_pool.entry_fee, precision: 2) %>
+                </div>
+                <div class="text-sm text-gray-500">entry fee</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-6 py-4">
+            <div class="space-y-3">
+              <% if betting_pool.description.present? %>
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Description</dt>
+                  <dd class="text-sm text-gray-900"><%= truncate(betting_pool.description, length: 150) %></dd>
+                </div>
+              <% end %>
+
+              <!-- Pool Stats -->
+              <div class="pt-3 border-t border-gray-200">
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-gray-500">Total Pool:</span>
+                    <span class="font-medium text-gray-900">
+                      $<%= number_with_precision(betting_pool.entry_fee * betting_pool.betting_participations.count, precision: 2) %>
+                    </span>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Status:</span>
+                    <% if betting_pool.active? %>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    <% else %>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                        Inactive
+                      </span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Participants Preview -->
+              <% if betting_pool.betting_participations.any? %>
+                <div class="pt-3 border-t border-gray-200">
+                  <div class="text-sm text-gray-500 mb-2">Recent participants:</div>
+                  <div class="flex items-center space-x-2">
+                    <% betting_pool.betting_participations.includes(:user).limit(3).each do |participation| %>
+                      <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
+                        <%= participation.user.first_name %>
+                      </span>
+                    <% end %>
+                    <% if betting_pool.betting_participations.count > 3 %>
+                      <span class="text-xs text-gray-400">
+                        +<%= betting_pool.betting_participations.count - 3 %> more
+                      </span>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
+            <div class="space-x-3">
+              <%= link_to "View Details", admin_trip_betting_pool_path(@trip, betting_pool),
+                  class: "text-green-600 hover:text-green-900 text-sm font-medium" %>
+              <%= link_to "Edit", edit_admin_trip_betting_pool_path(@trip, betting_pool),
+                  class: "text-blue-600 hover:text-blue-900 text-sm font-medium" %>
+            </div>
+            <div>
+              <%= link_to "Delete", admin_trip_betting_pool_path(@trip, betting_pool),
+                  method: :delete,
+                  class: "text-red-600 hover:text-red-900 text-sm font-medium",
+                  data: {
+                    "turbo-method": "delete",
+                    confirm: "Are you sure you want to delete this betting pool? This will remove all participant entries."
+                  } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="text-center py-12 bg-white shadow-lg rounded-lg border border-gray-200">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No betting pools yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Get started by creating your first betting pool for this trip.</p>
+      <div class="mt-6">
+        <%= link_to "Add Betting Pool", new_admin_trip_betting_pool_path(@trip),
+            class: "inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" %>
+      </div>
+    </div>
+  <% end %>
+</div>
