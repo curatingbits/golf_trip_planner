@@ -241,7 +241,9 @@
                   <% end %>
                 </div>
 
-                <p class="text-sm text-gray-600 mb-3"><%= room.beds_description %></p>
+                <% if room.description.present? %>
+                  <p class="text-sm text-gray-600 mb-3"><%= room.description %></p>
+                <% end %>
 
                 <% if room.current_occupants.any? %>
                   <div class="mb-3">
