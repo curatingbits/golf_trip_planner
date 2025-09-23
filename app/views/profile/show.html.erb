@@ -1,0 +1,81 @@
+<% content_for :title, "My Profile" %>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <!-- Profile Header -->
+    <div class="bg-white shadow rounded-lg">
+      <div class="px-6 py-8">
+        <div class="flex items-center space-x-6">
+          <div class="flex-shrink-0">
+            <img class="h-24 w-24 rounded-full object-cover" src="<%= @user.avatar_url(size: 96) %>" alt="<%= @user.full_name %>">
+          </div>
+          <div class="flex-1 min-w-0">
+            <h1 class="text-2xl font-bold text-gray-900"><%= @user.full_name %></h1>
+            <p class="text-sm text-gray-600"><%= @user.email %></p>
+            <p class="text-sm text-gray-600">Handicap: <%= @user.handicap %></p>
+            <% if @user.admin? %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mt-2">
+                Administrator
+              </span>
+            <% end %>
+          </div>
+          <div class="flex-shrink-0 flex space-x-3">
+            <%= link_to "Edit Profile", edit_profile_path,
+                class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium" %>
+            <%= link_to "Change Password", change_password_path,
+                class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trip Information -->
+    <div class="mt-8 bg-white shadow rounded-lg">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-medium text-gray-900">Trip Information</h2>
+      </div>
+      <div class="px-6 py-4">
+        <% if @user.trips.any? %>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Active Trips</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @user.trips.count %></dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Current Room Status</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                <% trip = @user.trips.first %>
+                <% if trip && @user.room_for_trip(trip) %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Reserved
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Pending
+                  </span>
+                <% end %>
+              </dd>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <h3 class="text-sm font-medium text-gray-500 mb-2">Registered Trips</h3>
+            <div class="space-y-2">
+              <% @user.trips.each do |trip| %>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                  <div>
+                    <p class="text-sm font-medium text-gray-900"><%= trip.name %></p>
+                    <p class="text-sm text-gray-600"><%= trip.location %> • <%= trip.start_date.strftime("%B %d, %Y") %></p>
+                  </div>
+                  <%= link_to "View Trip", trip_path(trip), class: "text-blue-600 hover:text-blue-800 text-sm font-medium" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <p class="text-gray-500">You are not currently registered for any trips.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

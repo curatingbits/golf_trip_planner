@@ -1,12 +1,34 @@
 class TripsController < ApplicationController
   before_action :set_trip
+  before_action :require_authentication, except: [:show]
 
   def show
     @golf_rounds = @trip.golf_rounds.by_date
     @accommodations = @trip.accommodations.includes(:rooms)
     @betting_pools = @trip.betting_pools
     @itinerary_items = @trip.itinerary_items.by_date_and_time
-    @user_room = current_user.room_for_trip(@trip) if current_user.registered_for_trip?(@trip)
+    @user_room = current_user&.room_for_trip(@trip) if current_user&.registered_for_trip?(@trip)
+  end
+
+  def register
+    if current_user.registered_for_trip?(@trip)
+      redirect_to @trip, alert: "You are already registered for this trip."
+      return
+    end
+
+    begin
+      TripRegistration.create!(
+        user: current_user,
+        trip: @trip,
+        registration_date: Time.current
+      )
+
+      redirect_to room_selection_trip_path(@trip), notice: "Successfully registered for #{@trip.name}! Please select your room."
+    rescue ActiveRecord::RecordInvalid => e
+      redirect_to @trip, alert: "Registration failed: #{e.record.errors.full_messages.join(', ')}"
+    rescue => e
+      redirect_to @trip, alert: "An error occurred during registration. Please try again."
+    end
   end
 
   def room_selection
@@ -56,5 +78,9 @@ class TripsController < ApplicationController
 
   def set_trip
     @trip = Trip.find(params[:id])
+  end
+
+  def require_authentication
+    redirect_to login_path unless current_user
   end
 end

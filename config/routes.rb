@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  # Profile management
+  get "/profile", to: "profile#show", as: :profile
+  get "/profile/edit", to: "profile#edit", as: :edit_profile
+  patch "/profile", to: "profile#update"
+  get "/profile/password", to: "profile#password", as: :change_password
+  patch "/profile/password", to: "profile#update_password"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

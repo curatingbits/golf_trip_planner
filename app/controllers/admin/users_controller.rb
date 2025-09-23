@@ -103,24 +103,36 @@ class Admin::UsersController < ApplicationController
 
   # Custom action to update room assignment
   def update_room
-    room = Room.find(params[:room_id])
-    trip = room.accommodation.trip
-
-    unless @user.registered_for_trip?(trip)
-      redirect_to admin_user_path(@user), alert: "User must be registered for the trip first."
+    unless params[:room_id].present?
+      redirect_to admin_user_path(@user), alert: "Please select a room."
       return
     end
 
-    # Remove existing room reservation for this trip
-    @user.room_reservations.joins(room: { accommodation: :trip })
-         .where(trips: { id: trip.id }).destroy_all
+    begin
+      room = Room.find(params[:room_id])
+      trip = room.accommodation.trip
 
-    # Create new reservation if room has capacity
-    if room.available?
-      RoomReservation.create!(user: @user, room: room, reservation_date: Time.current)
-      redirect_to admin_user_path(@user), notice: "Room assignment updated successfully."
-    else
-      redirect_to admin_user_path(@user), alert: "Room is at full capacity."
+      unless @user.registered_for_trip?(trip)
+        redirect_to admin_user_path(@user), alert: "User must be registered for the trip first."
+        return
+      end
+
+      # Remove existing room reservation for this trip
+      existing_reservations = @user.room_reservations.joins(room: { accommodation: :trip })
+                                   .where(trips: { id: trip.id })
+      existing_reservations.destroy_all
+
+      # Create new reservation if room has capacity
+      if room.available?
+        RoomReservation.create!(user: @user, room: room, reservation_date: Time.current)
+        redirect_to admin_user_path(@user), notice: "Room assignment updated successfully to #{room.name}."
+      else
+        redirect_to admin_user_path(@user), alert: "Room #{room.name} is at full capacity (#{room.current_occupants.count}/#{room.capacity})."
+      end
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_user_path(@user), alert: "Selected room not found."
+    rescue => e
+      redirect_to admin_user_path(@user), alert: "Error updating room assignment: #{e.message}"
     end
   end
 

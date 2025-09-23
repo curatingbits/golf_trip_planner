@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :avatar
 
   has_many :trip_registrations, dependent: :destroy
   has_many :trips, through: :trip_registrations
@@ -12,6 +13,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :handicap, presence: true, numericality: true
+
+  validate :avatar_validation, if: -> { avatar.attached? }
 
   scope :admins, -> { where(admin: true) }
   scope :golfers, -> { where(admin: false) }
@@ -41,5 +44,41 @@ class User < ApplicationRecord
     room_reservations.joins(room: { accommodation: :trip })
                      .where(trips: { id: trip.id })
                      .first&.room
+  end
+
+  def avatar_url(size: 200)
+    if avatar.attached? && persisted?
+      begin
+        Rails.application.routes.url_helpers.rails_blob_url(
+          avatar.variant(resize_to_fill: [size, size]), only_path: true
+        )
+      rescue
+        # Fallback to default avatar if there's an error generating the URL
+        default_avatar_url(size: size)
+      end
+    else
+      default_avatar_url(size: size)
+    end
+  end
+
+  def default_avatar_url(size: 200)
+    # Generate a default avatar using the user's initials
+    "https://ui-avatars.com/api/?name=#{first_name}+#{last_name}&size=#{size}&background=3b82f6&color=ffffff&bold=true"
+  end
+
+  private
+
+  def avatar_validation
+    return unless avatar.attached?
+
+    # Check content type
+    unless avatar.content_type.in?(%w[image/jpeg image/jpg image/png image/webp])
+      errors.add(:avatar, "must be a JPEG, PNG, or WebP image")
+    end
+
+    # Check file size (2MB limit)
+    if avatar.byte_size > 2.megabytes
+      errors.add(:avatar, "must be less than 2MB")
+    end
   end
 end
