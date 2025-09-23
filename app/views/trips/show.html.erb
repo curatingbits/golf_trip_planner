@@ -195,7 +195,7 @@
           <div class="mt-6 pt-4 border-t border-gray-200">
             <div class="flex justify-between items-center font-semibold">
               <span>Total Betting Cost:</span>
-              <span class="text-xl text-blue-600">$<%= number_with_precision(@betting_pools.sum(:entry_fee), precision: 0) %></span>
+              <span class="text-xl text-blue-600">$<%= number_with_precision(@betting_pools.sum(:cost_per_person), precision: 0) %></span>
             </div>
           </div>
         <% else %>
@@ -288,7 +288,7 @@
         <div class="text-sm text-gray-600">Golf Rounds</div>
       </div>
       <div class="text-center">
-        <div class="text-2xl font-bold text-blue-600">$<%= number_with_precision(@betting_pools.sum(:entry_fee), precision: 0) %></div>
+        <div class="text-2xl font-bold text-blue-600">$<%= number_with_precision(@betting_pools.sum(:cost_per_person), precision: 0) %></div>
         <div class="text-sm text-gray-600">Betting Pools</div>
       </div>
       <div class="text-center">
@@ -306,9 +306,9 @@
       <div class="text-center">
         <div class="text-3xl font-bold text-gray-900">
           <% if @user_room %>
-            $<%= number_with_precision(@golf_rounds.sum(:cost_per_person) + @betting_pools.sum(:entry_fee) + @user_room.cost_per_person, precision: 2) %>
+            $<%= number_with_precision(@golf_rounds.sum(:cost_per_person) + @betting_pools.sum(:cost_per_person) + @user_room.cost_per_person, precision: 2) %>
           <% else %>
-            $<%= number_with_precision(@golf_rounds.sum(:cost_per_person) + @betting_pools.sum(:entry_fee), precision: 2) %>+
+            $<%= number_with_precision(@golf_rounds.sum(:cost_per_person) + @betting_pools.sum(:cost_per_person), precision: 2) %>+
           <% end %>
         </div>
         <div class="text-sm text-gray-600">Total Trip Cost per Person</div>
