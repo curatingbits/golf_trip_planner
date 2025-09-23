@@ -73,18 +73,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: golf_trip_planner_production
-    username: golf_trip_planner
-    password: <%= ENV["GOLF_TRIP_PLANNER_DATABASE_PASSWORD"] %>
+    database: <%= ENV["DATABASE_NAME"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: <%= ENV["DATABASE_HOST"] %>
+    port: <%= ENV["DATABASE_PORT"] %>
   cache:
     <<: *primary_production
-    database: golf_trip_planner_production_cache
+    database: <%= ENV["DATABASE_NAME"] %>_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: golf_trip_planner_production_queue
+    database: <%= ENV["DATABASE_NAME"] %>_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: golf_trip_planner_production_cable
+    database: <%= ENV["DATABASE_NAME"] %>_cable
     migrations_paths: db/cable_migrate
