@@ -89,11 +89,11 @@
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Check-in</dt>
-                  <dd class="text-sm text-gray-900"><%= accommodation.check_in_date.strftime("%b %d, %Y") %></dd>
+                  <dd class="text-sm text-gray-900"><%= accommodation.check_in_date&.strftime("%b %d, %Y") || "Not set" %></dd>
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Check-out</dt>
-                  <dd class="text-sm text-gray-900"><%= accommodation.check_out_date.strftime("%b %d, %Y") %></dd>
+                  <dd class="text-sm text-gray-900"><%= accommodation.check_out_date&.strftime("%b %d, %Y") || "Not set" %></dd>
                 </div>
               </div>
 

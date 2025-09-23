@@ -52,7 +52,7 @@
                   </span>
                   <% if registration.deposit_paid_date.present? %>
                     <p class="text-xs text-gray-500 mt-1">
-                      Paid on <%= registration.deposit_paid_date.strftime("%B %d, %Y") %>
+                      Paid on <%= registration.deposit_paid_date&.strftime("%B %d, %Y") || "Unknown date" %>
                     </p>
                   <% end %>
                 <% else %>
@@ -133,7 +133,7 @@
                   <h3 class="font-semibold text-gray-900"><%= round.course&.name || round.course_name %></h3>
                   <p class="text-sm text-gray-500">
                     <% if round.tee_time %>
-                      <%= round.tee_time.strftime("%A, %B %d at %I:%M %p") %>
+                      <%= round.tee_time&.strftime("%A, %B %d at %I:%M %p") || "Time TBD" %>
                     <% end %>
                   </p>
                 </div>

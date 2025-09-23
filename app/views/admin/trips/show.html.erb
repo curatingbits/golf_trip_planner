@@ -230,7 +230,7 @@
                   <h4 class="font-semibold text-gray-900"><%= round.course&.name || round.course_name %></h4>
                   <p class="text-sm text-gray-500">
                     <% if round.tee_time %>
-                      <%= round.tee_time.strftime("%A, %B %d at %I:%M %p") %>
+                      <%= round.tee_time&.strftime("%A, %B %d at %I:%M %p") || "Time TBD" %>
                     <% end %>
                   </p>
                 </div>
@@ -379,7 +379,7 @@
                           </div>
                           <% if registration.deposit_paid_date.present? %>
                             <p class="text-xs text-gray-500 mt-1">
-                              <%= registration.deposit_paid_date.strftime("%m/%d/%Y") %>
+                              <%= registration.deposit_paid_date&.strftime("%m/%d/%Y") || "Unknown date" %>
                             </p>
                           <% end %>
                         <% else %>
