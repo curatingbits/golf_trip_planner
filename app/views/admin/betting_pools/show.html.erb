@@ -97,7 +97,7 @@
           <div class="ml-5 w-0 flex-1">
             <dl>
               <dt class="text-sm font-medium text-gray-500 truncate">Entry Fee</dt>
-              <dd class="text-lg font-medium text-gray-900">$<%= number_with_precision(@betting_pool.entry_fee, precision: 2) %></dd>
+              <dd class="text-lg font-medium text-gray-900">$<%= number_with_precision(@betting_pool.entry_fee || 0, precision: 2) %></dd>
             </dl>
           </div>
         </div>
@@ -135,7 +135,7 @@
           <div class="ml-5 w-0 flex-1">
             <dl>
               <dt class="text-sm font-medium text-gray-500 truncate">Total Pool</dt>
-              <dd class="text-lg font-medium text-gray-900">$<%= number_with_precision(@betting_pool.entry_fee * @participations.count, precision: 2) %></dd>
+              <dd class="text-lg font-medium text-gray-900">$<%= number_with_precision((@betting_pool.entry_fee || 0) * @participations.count, precision: 2) %></dd>
             </dl>
           </div>
         </div>
@@ -225,7 +225,7 @@
                   <%= participation.user.handicap || "N/A" %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  $<%= number_with_precision(@betting_pool.entry_fee, precision: 2) %>
+                  $<%= number_with_precision(@betting_pool.entry_fee || 0, precision: 2) %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <%= participation.created_at.strftime("%b %d, %Y") %>

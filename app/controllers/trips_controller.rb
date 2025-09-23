@@ -74,6 +74,15 @@ class TripsController < ApplicationController
     end
   end
 
+  def registered_users
+    @registered_users = @trip.users.includes(:room_reservations).map do |user|
+      {
+        user: user,
+        room: user.room_for_trip(@trip)
+      }
+    end.sort_by { |data| data[:user].full_name }
+  end
+
   private
 
   def set_trip

@@ -16,11 +16,20 @@ class Admin::BettingPoolsController < ApplicationController
   end
 
   def create
+    Rails.logger.debug "CREATE ACTION STARTED - Params: #{params.inspect}"
+    Rails.logger.debug "Current User: #{current_user&.id}, Admin: #{current_user&.admin?}"
+
     @betting_pool = @trip.betting_pools.build(betting_pool_params)
 
+    Rails.logger.debug "BettingPool params: #{betting_pool_params.inspect}"
+    Rails.logger.debug "BettingPool valid?: #{@betting_pool.valid?}"
+    Rails.logger.debug "BettingPool errors: #{@betting_pool.errors.full_messages}"
+
     if @betting_pool.save
+      Rails.logger.debug "BettingPool SAVE SUCCESS - ID: #{@betting_pool.id}"
       redirect_to admin_trip_betting_pools_path(@trip), notice: 'Betting pool was successfully created.'
     else
+      Rails.logger.debug "BettingPool save failed. Errors: #{@betting_pool.errors.full_messages}"
       render :new
     end
   end

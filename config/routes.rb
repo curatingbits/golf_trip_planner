@@ -57,6 +57,7 @@ Rails.application.routes.draw do
       post :register
       get :room_selection
       post :select_room
+      get :registered_users
     end
     resources :rooms, only: [:show]
   end

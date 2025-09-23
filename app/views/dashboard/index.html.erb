@@ -130,11 +130,20 @@
                           💳 Deposit Paid
                         </div>
                       <% else %>
-                        <div class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm">
-                          <svg class="mr-2 h-4 w-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                          </svg>
-                          ⏳ Deposit Pending ($<%= number_with_precision(trip.deposit_amount, precision: 2) %>)
+                        <div class="flex items-center space-x-3">
+                          <div class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm">
+                            <svg class="mr-2 h-4 w-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            ⏳ Deposit Pending ($<%= number_with_precision(trip.deposit_amount, precision: 2) %>)
+                          </div>
+                          <a href="venmo://paycharge?txn=pay&recipients=drobsokc&amount=<%= trip.deposit_amount %>&note=<%= URI.encode_www_form_component("#{trip.name} deposit") %>"
+                             class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white border border-blue-600 shadow-sm hover:bg-blue-700 transition-colors">
+                            <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M13.454 9.046h-1.454v4.615c0 1.077-.769 1.846-1.846 1.846s-1.846-.769-1.846-1.846v-4.615h-1.454c-.308 0-.615-.308-.615-.615s.308-.615.615-.615h5.6c.308 0 .615.308.615.615s-.307.615-.615.615zm-2.454-2.153c-.769 0-1.385-.615-1.385-1.385s.615-1.385 1.385-1.385 1.385.615 1.385 1.385-.616 1.385-1.385 1.385zm-6.5 10.107c-2.077 0-3.769-1.692-3.769-3.769s1.692-3.769 3.769-3.769h1.385v1.846h-1.385c-1.077 0-1.923.846-1.923 1.923s.846 1.923 1.923 1.923h1.385v1.846h-1.385zm15.231 0h-1.385v-1.846h1.385c1.077 0 1.923-.846 1.923-1.923s-.846-1.923-1.923-1.923h-1.385v-1.846h1.385c2.077 0 3.769 1.692 3.769 3.769s-1.692 3.769-3.769 3.769z"/>
+                            </svg>
+                            Pay via Venmo
+                          </a>
                         </div>
                       <% end %>
                     <% end %>

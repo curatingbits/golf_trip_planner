@@ -13,4 +13,12 @@ class BettingPool < ApplicationRecord
   def participants_count
     betting_participations.count
   end
+
+  def entry_fee
+    cost_per_person
+  end
+
+  def entry_fee=(value)
+    self.cost_per_person = value
+  end
 end

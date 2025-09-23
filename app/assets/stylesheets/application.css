@@ -8,3 +8,14 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Markdown content styling */
+.markdown-content a {
+  color: #2563eb; /* Tailwind blue-600 */
+  text-decoration: underline;
+}
+
+.markdown-content a:hover {
+  color: #1d4ed8; /* Tailwind blue-700 */
+  text-decoration: underline;
+}
