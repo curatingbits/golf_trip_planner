@@ -1,0 +1,117 @@
+<% content_for :title, "Join - Okie Cup" %>
+
+<div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="flex justify-center">
+      <svg class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M15.75 4.5V2.25a2.25 2.25 0 00-2.25-2.25h-3a2.25 2.25 0 00-2.25 2.25V4.5m6 0V2.25a2.25 2.25 0 00-2.25-2.25h-3a2.25 2.25 0 00-2.25 2.25V4.5m6 0h.008v.008H15.75V4.5zm-6 0h.008v.008H9.75V4.5z" />
+      </svg>
+    </div>
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+      Join Okie Cup
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      Create your account to join golf trips
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow-xl sm:rounded-lg sm:px-10 border border-gray-200">
+      <% if @user.errors.any? %>
+        <div class="mb-6 bg-red-50 border border-red-200 rounded-md p-4">
+          <div class="flex">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+            <div class="ml-3">
+              <ul class="text-sm text-red-800">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= form_with model: @user, url: letsgo_path, method: :post, local: true, class: "space-y-6" do |form| %>
+        <div>
+          <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.email_field :email,
+                autocomplete: "email",
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "Enter your email address" %>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
+            <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_field :first_name,
+                  autocomplete: "given-name",
+                  required: true,
+                  class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "First name" %>
+            </div>
+          </div>
+
+          <div>
+            <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_field :last_name,
+                  autocomplete: "family-name",
+                  required: true,
+                  class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                  placeholder: "Last name" %>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :handicap, "Golf Handicap", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.number_field :handicap,
+                step: 0.1,
+                min: 0,
+                max: 54,
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "e.g., 18.0" %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Enter your current golf handicap index (or your best estimate)</p>
+        </div>
+
+        <div>
+          <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.password_field :password,
+                autocomplete: "new-password",
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "Create a password" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= form.password_field :password_confirmation,
+                autocomplete: "new-password",
+                required: true,
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm",
+                placeholder: "Confirm your password" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.submit "Join Okie Cup",
+              class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

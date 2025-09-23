@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get "/register/:token", to: "registrations#new", as: :register
   post "/register/:token", to: "registrations#create"
 
+  # Secret registration page
+  get "/letsgo", to: "registrations#new", as: :letsgo
+  post "/letsgo", to: "registrations#create"
+
   # Admin namespace
   namespace :admin do
     root "dashboard#index"

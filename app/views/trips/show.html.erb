@@ -1,13 +1,13 @@
-<% content_for :title, "#{@trip.name} - Golf Trip Planner" %>
+<% content_for :title, "#{@trip.name} - Okie Cup" %>
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
   <!-- Trip Header -->
   <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden mb-8">
     <div class="px-6 py-8">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
         <div class="flex-1">
           <h1 class="text-3xl font-bold text-gray-900"><%= @trip.name %></h1>
-          <div class="mt-4 flex items-center text-sm text-gray-500 space-x-6">
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center text-sm text-gray-500 space-y-2 sm:space-y-0 sm:space-x-6">
             <div class="flex items-center">
               <svg class="mr-2 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -30,7 +30,7 @@
           </div>
           <div class="mt-4 text-gray-600 markdown-content"><%= render_markdown(@trip.description).html_safe %></div>
         </div>
-        <div class="ml-6 flex flex-col items-end space-y-3">
+        <div class="flex-shrink-0 lg:ml-6 flex flex-col space-y-3">
           <% if current_user&.registered_for_trip?(@trip) %>
             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800">
               <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">

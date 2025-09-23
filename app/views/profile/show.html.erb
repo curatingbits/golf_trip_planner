@@ -1,15 +1,15 @@
-<% content_for :title, "My Profile" %>
+<% content_for :title, "My Profile - Okie Cup" %>
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-3xl">
     <!-- Profile Header -->
     <div class="bg-white shadow rounded-lg">
       <div class="px-6 py-8">
-        <div class="flex items-center space-x-6">
-          <div class="flex-shrink-0">
+        <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <div class="flex-shrink-0 flex justify-center sm:justify-start">
             <img class="h-24 w-24 rounded-full object-cover" src="<%= @user.avatar_url(size: 96) %>" alt="<%= @user.full_name %>">
           </div>
-          <div class="flex-1 min-w-0">
+          <div class="flex-1 min-w-0 text-center sm:text-left">
             <h1 class="text-2xl font-bold text-gray-900"><%= @user.full_name %></h1>
             <p class="text-sm text-gray-600"><%= @user.email %></p>
             <p class="text-sm text-gray-600">Handicap: <%= @user.handicap %></p>
@@ -19,11 +19,11 @@
               </span>
             <% end %>
           </div>
-          <div class="flex-shrink-0 flex space-x-3">
+          <div class="flex-shrink-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
             <%= link_to "Edit Profile", edit_profile_path,
-                class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium" %>
+                class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center" %>
             <%= link_to "Change Password", change_password_path,
-                class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium" %>
+                class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center" %>
           </div>
         </div>
       </div>
