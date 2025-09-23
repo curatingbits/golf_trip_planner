@@ -399,17 +399,26 @@
                         <% end %>
                       </td>
                       <td class="px-4 py-3 whitespace-nowrap">
-                        <% if registration.deposit_paid? %>
-                          <%= link_to "Unconfirm", unconfirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
-                              method: :patch,
-                              data: { "turbo-method": "patch" },
-                              class: "text-xs text-red-600 hover:text-red-900" %>
-                        <% else %>
-                          <%= link_to "Confirm Deposit", confirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
-                              method: :patch,
-                              data: { "turbo-method": "patch" },
-                              class: "text-xs text-green-600 hover:text-green-900 font-medium" %>
-                        <% end %>
+                        <div class="space-y-1">
+                          <% if registration.deposit_paid? %>
+                            <%= link_to "Unconfirm", unconfirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
+                                method: :patch,
+                                data: { "turbo-method": "patch" },
+                                class: "block text-xs text-red-600 hover:text-red-900" %>
+                          <% else %>
+                            <%= link_to "Confirm Deposit", confirm_deposit_admin_trip_path(@trip, registration_id: registration.id),
+                                method: :patch,
+                                data: { "turbo-method": "patch" },
+                                class: "block text-xs text-green-600 hover:text-green-900 font-medium" %>
+                          <% end %>
+                          <%= link_to "Unregister", unregister_user_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :delete,
+                              data: {
+                                "turbo-method": "delete",
+                                confirm: "Are you sure you want to unregister #{registration.user.full_name}? This will remove them from the trip, their room, and all betting pools."
+                              },
+                              class: "block text-xs text-red-600 hover:text-red-900 font-medium" %>
+                        </div>
                       </td>
                     </tr>
                   <% end %>

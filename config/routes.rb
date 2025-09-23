@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         get :participants
         patch :confirm_deposit
         patch :unconfirm_deposit
+        delete :unregister_user
       end
     end
     resources :users do

@@ -1,6 +1,6 @@
 class Admin::TripsController < ApplicationController
   before_action :require_admin
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit, :unregister_user]
 
   def index
     @trips = Trip.order(created_at: :desc).includes(:users, :accommodations, :golf_rounds)
@@ -54,6 +54,24 @@ class Admin::TripsController < ApplicationController
     registration = @trip.trip_registrations.find(params[:registration_id])
     registration.unconfirm_deposit!
     redirect_to admin_trip_path(@trip), notice: "Deposit unconfirmed for #{registration.user.full_name}."
+  end
+
+  def unregister_user
+    registration = @trip.trip_registrations.find(params[:registration_id])
+    user = registration.user
+
+    # Remove room reservation if any
+    user.room_reservations.joins(room: { accommodation: :trip })
+        .where(trips: { id: @trip.id }).destroy_all
+
+    # Remove betting pool participations
+    user.betting_participations.joins(betting_pool: :trip)
+        .where(trips: { id: @trip.id }).destroy_all
+
+    # Remove trip registration
+    registration.destroy
+
+    redirect_to admin_trip_path(@trip), notice: "#{user.full_name} has been unregistered from the trip."
   end
 
   private
