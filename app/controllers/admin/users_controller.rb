@@ -108,9 +108,20 @@ class Admin::UsersController < ApplicationController
       return
     end
 
+    unless params[:trip_id].present?
+      redirect_to admin_user_path(@user), alert: "Trip information is missing."
+      return
+    end
+
     begin
       room = Room.find(params[:room_id])
-      trip = room.accommodation.trip
+      trip = Trip.find(params[:trip_id])
+
+      # Verify room belongs to the specified trip
+      unless room.accommodation.trip_id == trip.id
+        redirect_to admin_user_path(@user), alert: "Selected room does not belong to the specified trip."
+        return
+      end
 
       unless @user.registered_for_trip?(trip)
         redirect_to admin_user_path(@user), alert: "User must be registered for the trip first."
