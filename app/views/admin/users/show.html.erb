@@ -150,6 +150,8 @@
                             </div>
                             <button type="button"
                                 onclick="showRoomModal(<%= trip.id %>)"
+                                data-action="show-room-modal"
+                                data-trip-id="<%= trip.id %>"
                                 class="text-xs text-blue-600 hover:text-blue-900">
                               Change Room
                             </button>
@@ -157,6 +159,8 @@
                         <% else %>
                           <button type="button"
                               onclick="showRoomModal(<%= trip.id %>)"
+                              data-action="show-room-modal"
+                              data-trip-id="<%= trip.id %>"
                               class="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-yellow-700 bg-yellow-100 hover:bg-yellow-200">
                             Assign Room
                           </button>
@@ -261,7 +265,7 @@
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <h3 class="text-lg leading-6 font-medium text-gray-900">Select Room for <%= trip.name %></h3>
           <div class="mt-4">
-            <%= form_with url: update_room_admin_user_path(@user), method: :post, local: true do |f| %>
+            <%= form_with url: update_room_admin_user_path(@user), method: :post, local: true, data: { turbo: false } do |f| %>
               <%= f.hidden_field :trip_id, value: trip.id %>
               <div class="mb-4">
                 <% all_rooms = trip.accommodations.includes(:rooms).flat_map(&:rooms) %>
@@ -276,7 +280,10 @@
                     class: "mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
               </div>
               <div class="flex justify-end space-x-3">
-                <button type="button" onclick="hideRoomModal(<%= trip.id %>)"
+                <button type="button"
+                    onclick="hideRoomModal(<%= trip.id %>)"
+                    data-action="hide-room-modal"
+                    data-trip-id="<%= trip.id %>"
                     class="inline-flex justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                   Cancel
                 </button>
@@ -292,11 +299,41 @@
 <% end %>
 
 <script>
+document.addEventListener('turbo:load', function() {
+  // Set up event delegation for room modal buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('[data-action="show-room-modal"]')) {
+      e.preventDefault();
+      const tripId = e.target.dataset.tripId;
+      const modal = document.getElementById('room-modal-' + tripId);
+      if (modal) {
+        modal.classList.remove('hidden');
+      }
+    }
+
+    if (e.target.matches('[data-action="hide-room-modal"]')) {
+      e.preventDefault();
+      const tripId = e.target.dataset.tripId;
+      const modal = document.getElementById('room-modal-' + tripId);
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+  });
+});
+
+// Fallback functions for any remaining onclick handlers
 function showRoomModal(tripId) {
-  document.getElementById('room-modal-' + tripId).classList.remove('hidden');
+  const modal = document.getElementById('room-modal-' + tripId);
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
 }
 
 function hideRoomModal(tripId) {
-  document.getElementById('room-modal-' + tripId).classList.add('hidden');
+  const modal = document.getElementById('room-modal-' + tripId);
+  if (modal) {
+    modal.classList.add('hidden');
+  }
 }
 </script>
