@@ -1,0 +1,165 @@
+<% content_for :title, "Assign Room - #{@user.full_name}" %>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol role="list" class="flex items-center space-x-4">
+        <li>
+          <%= link_to admin_root_path, class: "text-gray-400 hover:text-gray-500" do %>
+            <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 00-1.414 1.414L2.586 12H9a2 2 0 012 2v7a2 2 0 01-2 2H2a2 2 0 01-2-2V7.414A2 2 0 01.586 6l7-7a2 2 0 012.828 0l7 7A2 2 0 0118 7.414V21a2 2 0 01-2 2h-7a2 2 0 01-2-2v-7a2 2 0 012-2h6.414L7.414 4 10.707 2.293z" />
+            </svg>
+            <span class="sr-only">Admin</span>
+          <% end %>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to "Users", admin_users_path, class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <%= link_to @user.full_name, admin_user_path(@user), class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="h-5 w-5 flex-shrink-0 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-4 text-sm font-medium text-gray-500">Room Assignment</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="mt-4">
+      <h1 class="text-3xl font-bold text-gray-900">Assign Room for <%= @user.full_name %></h1>
+      <p class="mt-2 text-gray-600">Select a room for this user from their registered trips.</p>
+    </div>
+  </div>
+
+  <% if @user_trips.any? %>
+    <div class="space-y-8">
+      <% @user_trips.each do |trip| %>
+        <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900"><%= trip.name %></h2>
+                <p class="text-sm text-gray-500">
+                  <%= trip.location %> •
+                  <%= trip.start_date.strftime("%b %d") %> - <%= trip.end_date.strftime("%b %d, %Y") %>
+                </p>
+              </div>
+              <% current_room = @user.room_for_trip(trip) %>
+              <% if current_room %>
+                <div class="text-right">
+                  <div class="text-sm font-medium text-gray-900">Current Room: <%= current_room.name %></div>
+                  <div class="text-xs text-gray-500"><%= current_room.accommodation.name %></div>
+                </div>
+              <% else %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  No room assigned
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <% if trip.accommodations.any? %>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Available Rooms</h3>
+
+              <% trip.accommodations.each do |accommodation| %>
+                <div class="mb-6 last:mb-0">
+                  <h4 class="text-md font-medium text-gray-700 mb-3">
+                    <%= accommodation.name %>
+                    <span class="text-sm font-normal text-gray-500">(<%= accommodation.accommodation_type.humanize %>)</span>
+                  </h4>
+
+                  <% if accommodation.rooms.any? %>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <% accommodation.rooms.each do |room| %>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
+                          <div class="flex items-start justify-between mb-2">
+                            <div>
+                              <h5 class="text-sm font-medium text-gray-900"><%= room.name %></h5>
+                              <p class="text-xs text-gray-500"><%= room.room_type.humanize %> • Sleeps <%= room.capacity %></p>
+                            </div>
+                            <div class="text-right">
+                              <div class="text-sm font-medium text-gray-900">
+                                $<%= number_with_precision(room.cost_per_person, precision: 0) %>
+                              </div>
+                              <div class="text-xs text-gray-500">per person</div>
+                            </div>
+                          </div>
+
+                          <% if room.description.present? %>
+                            <p class="text-xs text-gray-600 mb-3"><%= room.description %></p>
+                          <% end %>
+
+                          <div class="flex items-center justify-between">
+                            <div class="text-xs text-gray-500">
+                              <%= room.available_spots %> of <%= room.capacity %> available
+                            </div>
+
+                            <%= form_with url: update_room_admin_user_path(@user), method: :post, local: true do |f| %>
+                              <%= f.hidden_field :trip_id, value: trip.id %>
+                              <%= f.hidden_field :room_id, value: room.id %>
+
+                              <% if current_room == room %>
+                                <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                                  Current Room
+                                </span>
+                              <% elsif room.available? %>
+                                <%= f.submit "Assign Room",
+                                    class: "inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                                    data: { confirm: current_room ? "This will move #{@user.full_name} from #{current_room.name} to #{room.name}. Continue?" : "Assign #{@user.full_name} to #{room.name}?" } %>
+                              <% else %>
+                                <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-500">
+                                  Room Full
+                                </span>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p class="text-sm text-gray-500 italic">No rooms available for this accommodation.</p>
+                  <% end %>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="text-sm text-gray-500 italic">No accommodations set up for this trip.</p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 p-8 text-center">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No trips registered</h3>
+      <p class="mt-1 text-sm text-gray-500">This user is not registered for any trips.</p>
+      <div class="mt-6">
+        <%= link_to "Back to User", admin_user_path(@user),
+            class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-8 flex justify-end">
+    <%= link_to "Back to User", admin_user_path(@user),
+        class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" %>
+  </div>
+</div>

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       member do
         post :assign_trip
         delete :remove_from_trip
+        get :edit_room
         post :update_room
       end
     end

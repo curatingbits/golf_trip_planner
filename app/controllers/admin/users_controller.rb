@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :assign_trip, :update_room]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :assign_trip, :edit_room, :update_room]
 
   def index
     @users = User.all
@@ -99,6 +99,12 @@ class Admin::UsersController < ApplicationController
     else
       redirect_to admin_user_path(@user), alert: "User is not registered for this trip."
     end
+  end
+
+  # Show room assignment page for admin
+  def edit_room
+    @user_trips = @user.trips.includes(:accommodations).order(:start_date)
+    @selected_trip_id = params[:trip_id]
   end
 
   # Custom action to update room assignment
