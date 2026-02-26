@@ -27,10 +27,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @user_trips = @user.trips.includes(:accommodations, :golf_rounds, :betting_pools)
+    @user_trips = @user.trips.includes(:accommodations, :betting_pools)
     @available_trips = Trip.where.not(id: @user_trips.pluck(:id)).order(:name)
     @room_reservations = @user.room_reservations.includes(room: { accommodation: :trip })
-    @user_betting_pool_ids = @user.betting_participations.pluck(:betting_pool_id).to_set
   end
 
   def new
