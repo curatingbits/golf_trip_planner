@@ -1,6 +1,6 @@
 class Admin::TripsController < ApplicationController
   before_action :require_admin
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit, :unregister_user]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit, :unregister_user, :remove_attachment]
 
   def index
     @trips = Trip.order(created_at: :desc).includes(:users, :accommodations, :golf_rounds)
@@ -56,6 +56,12 @@ class Admin::TripsController < ApplicationController
     redirect_to admin_trip_path(@trip), notice: "Deposit unconfirmed for #{registration.user.full_name}."
   end
 
+  def remove_attachment
+    attachment = @trip.attachments.find(params[:attachment_id])
+    attachment.purge
+    redirect_to edit_admin_trip_path(@trip), notice: "Attachment removed."
+  end
+
   def unregister_user
     registration = @trip.trip_registrations.find(params[:registration_id])
     user = registration.user
@@ -81,6 +87,6 @@ class Admin::TripsController < ApplicationController
   end
 
   def trip_params
-    params.require(:trip).permit(:name, :location, :start_date, :end_date, :total_cost, :deposit_amount, :description, :active)
+    params.require(:trip).permit(:name, :location, :start_date, :end_date, :total_cost, :deposit_amount, :description, :active, attachments: [])
   end
 end

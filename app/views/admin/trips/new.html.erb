@@ -40,7 +40,7 @@
 
   <!-- Form -->
   <div class="bg-white shadow-lg rounded-lg border border-gray-200">
-    <%= form_with model: [:admin, @trip], local: true, class: "space-y-6" do |form| %>
+    <%= form_with model: [:admin, @trip], local: true, multipart: true, class: "space-y-6" do |form| %>
       <div class="px-6 py-6">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <!-- Trip Name -->
@@ -153,6 +153,21 @@
             </div>
             <% if @trip.errors[:description].any? %>
               <p class="mt-2 text-sm text-red-600"><%= @trip.errors[:description].first %></p>
+            <% end %>
+          </div>
+
+          <!-- File Attachments -->
+          <div class="sm:col-span-2">
+            <%= form.label :attachments, "Attachments", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.file_field :attachments,
+                  multiple: true,
+                  accept: ".pdf,.jpg,.jpeg,.png,.csv",
+                  class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100" %>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">PDF, JPG, PNG, or CSV files up to 10MB each</p>
+            <% if @trip.errors[:attachments].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= @trip.errors[:attachments].first %></p>
             <% end %>
           </div>
 

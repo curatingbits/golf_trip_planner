@@ -5,6 +5,7 @@ class Trip < ApplicationRecord
   has_many :betting_pools, dependent: :destroy
   has_many :trip_registrations, dependent: :destroy
   has_many :users, through: :trip_registrations
+  has_many_attached :attachments
 
   validates :name, presence: true
   validates :location, presence: true
@@ -14,6 +15,7 @@ class Trip < ApplicationRecord
   validates :deposit_amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   validate :end_date_after_start_date
+  validate :attachments_validation
 
   scope :active, -> { where(active: true) }
   scope :upcoming, -> { where('start_date > ?', Date.current) }
@@ -44,5 +46,21 @@ class Trip < ApplicationRecord
     return unless start_date && end_date
 
     errors.add(:end_date, "must be after start date") if end_date < start_date
+  end
+
+  def attachments_validation
+    return unless attachments.attached?
+
+    attachments.each do |attachment|
+      unless attachment.content_type.in?(%w[application/pdf image/jpeg image/jpg image/png text/csv])
+        errors.add(:attachments, "must be PDF, JPG, PNG, or CSV files")
+        break
+      end
+
+      if attachment.byte_size > 10.megabytes
+        errors.add(:attachments, "must be less than 10MB each")
+        break
+      end
+    end
   end
 end

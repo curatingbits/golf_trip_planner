@@ -39,6 +39,7 @@ Rails.application.routes.draw do
         patch :confirm_deposit
         patch :unconfirm_deposit
         delete :unregister_user
+        delete :remove_attachment
       end
     end
     resources :users do
