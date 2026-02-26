@@ -1,6 +1,6 @@
 class Admin::TripsController < ApplicationController
   before_action :require_admin
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit, :unregister_user, :remove_attachment]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :confirm_deposit, :unconfirm_deposit, :confirm_room_payment, :unconfirm_room_payment, :confirm_betting_payment, :unconfirm_betting_payment, :unregister_user, :remove_attachment]
 
   def index
     @trips = Trip.order(created_at: :desc).includes(:users, :accommodations, :golf_rounds)
@@ -11,7 +11,7 @@ class Admin::TripsController < ApplicationController
     @golf_rounds = @trip.golf_rounds.by_date
     @betting_pools = @trip.betting_pools
     @registered_users = @trip.users.order(:first_name)
-    @trip_registrations = @trip.trip_registrations.includes(:user, :deposit_confirmed_by).order('users.first_name')
+    @trip_registrations = @trip.trip_registrations.includes(:user, :deposit_confirmed_by, :room_confirmed_by, :betting_confirmed_by).order('users.first_name')
   end
 
   def new
@@ -54,6 +54,30 @@ class Admin::TripsController < ApplicationController
     registration = @trip.trip_registrations.find(params[:registration_id])
     registration.unconfirm_deposit!
     redirect_to admin_trip_path(@trip), notice: "Deposit unconfirmed for #{registration.user.full_name}."
+  end
+
+  def confirm_room_payment
+    registration = @trip.trip_registrations.find(params[:registration_id])
+    registration.confirm_room_payment!(current_user)
+    redirect_back fallback_location: admin_trip_path(@trip), notice: "Room payment confirmed for #{registration.user.full_name}."
+  end
+
+  def unconfirm_room_payment
+    registration = @trip.trip_registrations.find(params[:registration_id])
+    registration.unconfirm_room_payment!
+    redirect_back fallback_location: admin_trip_path(@trip), notice: "Room payment unconfirmed for #{registration.user.full_name}."
+  end
+
+  def confirm_betting_payment
+    registration = @trip.trip_registrations.find(params[:registration_id])
+    registration.confirm_betting_payment!(current_user)
+    redirect_back fallback_location: admin_trip_path(@trip), notice: "Betting payment confirmed for #{registration.user.full_name}."
+  end
+
+  def unconfirm_betting_payment
+    registration = @trip.trip_registrations.find(params[:registration_id])
+    registration.unconfirm_betting_payment!
+    redirect_back fallback_location: admin_trip_path(@trip), notice: "Betting payment unconfirmed for #{registration.user.full_name}."
   end
 
   def remove_attachment

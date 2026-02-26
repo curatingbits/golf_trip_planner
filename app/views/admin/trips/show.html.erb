@@ -344,6 +344,12 @@
                       Confirmed By
                     </th>
                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Room Paid
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Betting Paid
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
@@ -396,6 +402,62 @@
                           <p class="text-xs text-gray-600"><%= registration.deposit_confirmed_by.full_name %></p>
                         <% else %>
                           <p class="text-xs text-gray-400">—</p>
+                        <% end %>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% if registration.room_paid? %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-green-700">Paid</span>
+                          </div>
+                          <% if registration.room_paid_date.present? %>
+                            <p class="text-xs text-gray-500 mt-1"><%= registration.room_paid_date.strftime("%m/%d/%Y") %></p>
+                          <% end %>
+                          <%= link_to "Unconfirm", unconfirm_room_payment_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "block text-xs text-red-600 hover:text-red-900 mt-1" %>
+                        <% else %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-yellow-700">Unpaid</span>
+                          </div>
+                          <%= link_to "Mark Paid", confirm_room_payment_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "block text-xs text-green-600 hover:text-green-900 font-medium mt-1" %>
+                        <% end %>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <% if registration.betting_paid? %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-green-700">Paid</span>
+                          </div>
+                          <% if registration.betting_paid_date.present? %>
+                            <p class="text-xs text-gray-500 mt-1"><%= registration.betting_paid_date.strftime("%m/%d/%Y") %></p>
+                          <% end %>
+                          <%= link_to "Unconfirm", unconfirm_betting_payment_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "block text-xs text-red-600 hover:text-red-900 mt-1" %>
+                        <% else %>
+                          <div class="flex items-center">
+                            <svg class="h-5 w-5 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-yellow-700">Unpaid</span>
+                          </div>
+                          <%= link_to "Mark Paid", confirm_betting_payment_admin_trip_path(@trip, registration_id: registration.id),
+                              method: :patch,
+                              data: { "turbo-method": "patch" },
+                              class: "block text-xs text-green-600 hover:text-green-900 font-medium mt-1" %>
                         <% end %>
                       </td>
                       <td class="px-4 py-3 whitespace-nowrap">

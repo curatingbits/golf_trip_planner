@@ -2,6 +2,8 @@ class TripRegistration < ApplicationRecord
   belongs_to :user
   belongs_to :trip
   belongs_to :deposit_confirmed_by, class_name: 'User', optional: true
+  belongs_to :room_confirmed_by, class_name: 'User', optional: true
+  belongs_to :betting_confirmed_by, class_name: 'User', optional: true
 
   validates :user_id, presence: true
   validates :trip_id, presence: true
@@ -25,6 +27,38 @@ class TripRegistration < ApplicationRecord
       deposit_paid: false,
       deposit_paid_date: nil,
       deposit_confirmed_by: nil
+    )
+  end
+
+  def confirm_room_payment!(admin_user)
+    update!(
+      room_paid: true,
+      room_paid_date: Time.current,
+      room_confirmed_by: admin_user
+    )
+  end
+
+  def unconfirm_room_payment!
+    update!(
+      room_paid: false,
+      room_paid_date: nil,
+      room_confirmed_by: nil
+    )
+  end
+
+  def confirm_betting_payment!(admin_user)
+    update!(
+      betting_paid: true,
+      betting_paid_date: Time.current,
+      betting_confirmed_by: admin_user
+    )
+  end
+
+  def unconfirm_betting_payment!
+    update!(
+      betting_paid: false,
+      betting_paid_date: nil,
+      betting_confirmed_by: nil
     )
   end
 

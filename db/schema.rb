@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_204016) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_26_180528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -151,7 +151,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_204016) do
     t.boolean "deposit_paid", default: false, null: false
     t.datetime "deposit_paid_date"
     t.integer "deposit_confirmed_by_id"
+    t.boolean "room_paid", default: false, null: false
+    t.datetime "room_paid_date"
+    t.integer "room_confirmed_by_id"
+    t.boolean "betting_paid", default: false, null: false
+    t.datetime "betting_paid_date"
+    t.integer "betting_confirmed_by_id"
+    t.index ["betting_confirmed_by_id"], name: "index_trip_registrations_on_betting_confirmed_by_id"
     t.index ["deposit_confirmed_by_id"], name: "index_trip_registrations_on_deposit_confirmed_by_id"
+    t.index ["room_confirmed_by_id"], name: "index_trip_registrations_on_room_confirmed_by_id"
     t.index ["trip_id"], name: "index_trip_registrations_on_trip_id"
     t.index ["user_id"], name: "index_trip_registrations_on_user_id"
   end

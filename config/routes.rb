@@ -38,6 +38,10 @@ Rails.application.routes.draw do
         get :participants
         patch :confirm_deposit
         patch :unconfirm_deposit
+        patch :confirm_room_payment
+        patch :unconfirm_room_payment
+        patch :confirm_betting_payment
+        patch :unconfirm_betting_payment
         delete :unregister_user
         delete :remove_attachment
       end
