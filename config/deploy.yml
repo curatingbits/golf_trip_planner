@@ -28,6 +28,7 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_PASSWORD
+    - RESEND_API_KEY
   clear:
     # Rails environment
     RAILS_ENV: production
