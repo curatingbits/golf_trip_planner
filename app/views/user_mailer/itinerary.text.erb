@@ -1,0 +1,58 @@
+<%= @trip.name %>
+<%= @trip.start_date.strftime("%B %d") %> - <%= @trip.end_date.strftime("%B %d, %Y") %>
+
+Hey <%= @user.first_name %>,
+
+The countdown is on! Here's everything you need to know for next week. Three incredible courses, perfect Arizona weather, and a house full of guys ready to compete. Let's make this one count.
+
+YOUR ROOM
+<%= @accommodation&.name %>
+<%= @room&.name %><% if @roommates.any? %>
+Sharing with: <%= @roommates.map(&:first_name).join(", ") %><% end %>
+
+---
+
+WEDNESDAY, MARCH 25 — Arrival Day
+Get settled in, grab your room, and get ready for the week.
+Dinner — 6:00 PM MST
+  Team Rusty: The Mission Kierland
+  Team LT: Buck & Rider North
+After Dinner — 8:00 PM MST
+  Both teams meet up at DraftKings Sports Bar
+
+THURSDAY, MARCH 26 — Round 1
+Party Bus Pickup: 8:15 AM MST — Bus departs from the house to Quintero Golf Club. Don't be late!
+<%= @golf_rounds[0]&.course&.name %>
+<%= @golf_rounds[0]&.course&.address %>
+Tee Time: <%= @golf_rounds[0]&.tee_time&.strftime("%-I:%M %p") %> MST
+Par <%= @golf_rounds[0]&.course&.par %> · <%= @golf_rounds[0]&.course&.yardage %> yards · Slope <%= @golf_rounds[0]&.course&.slope %>
+Dinner: Hamburgers at the Casa
+
+FRIDAY, MARCH 27 — Round 2
+<%= @golf_rounds[1]&.course&.name %>
+<%= @golf_rounds[1]&.course&.address %>
+Tee Time: <%= @golf_rounds[1]&.tee_time&.strftime("%-I:%M %p") %> MST
+Par <%= @golf_rounds[1]&.course&.par %> · <%= @golf_rounds[1]&.course&.yardage %> yards · Slope <%= @golf_rounds[1]&.course&.slope %>
+** Uber/Lyft required — plan to arrive before tee time.
+Dinner: Open night — explore Scottsdale!
+
+SATURDAY, MARCH 28 — Round 3
+<%= @golf_rounds[2]&.course&.name %>
+<%= @golf_rounds[2]&.course&.address %>
+Tee Time: <%= @golf_rounds[2]&.tee_time&.strftime("%-I:%M %p") %> MST
+Par <%= @golf_rounds[2]&.course&.par %> · <%= @golf_rounds[2]&.course&.yardage %> yards · Slope <%= @golf_rounds[2]&.course&.slope %>
+** Uber/Lyft required — plan to arrive before tee time.
+Dinner: Open night — explore Scottsdale!
+
+SUNDAY, MARCH 29 — Departure
+Safe travels home, boys.
+
+---
+
+DON'T FORGET
+- Bring $500 cash for games (Team Bet $300, Skins $150, 2's $50)
+- Sunscreen — it's the desert
+- Check the attached course handicap sheet
+
+See you out there,
+Duggan

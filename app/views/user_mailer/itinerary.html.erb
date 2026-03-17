@@ -1,0 +1,114 @@
+<% cal_btn = 'display: inline-block; padding: 4px 10px; font-size: 12px; color: #4285f4; border: 1px solid #4285f4; border-radius: 4px; text-decoration: none; margin-top: 8px;' %>
+
+<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; color: #333;">
+  <div style="background-color: #16a34a; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+    <h1 style="color: #ffffff; margin: 0; font-size: 24px;"><%= @trip.name %></h1>
+    <p style="color: #dcfce7; margin: 5px 0 0;"><%= @trip.start_date.strftime("%B %d") %> - <%= @trip.end_date.strftime("%B %d, %Y") %></p>
+  </div>
+
+  <div style="padding: 24px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
+    <p>Hey <%= @user.first_name %>,</p>
+
+    <p>The countdown is on! Here's everything you need to know for next week. Three incredible courses, perfect Arizona weather, and a house full of guys ready to compete. Let's make this one count.</p>
+
+    <%# ---- ROOM ASSIGNMENT ---- %>
+    <div style="margin: 24px 0; padding: 16px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+      <p style="margin: 0 0 4px; font-weight: bold; font-size: 16px;">Your Room</p>
+      <p style="margin: 0; color: #6b7280;"><%= @accommodation&.name %></p>
+      <p style="margin: 8px 0 0; font-size: 18px; font-weight: bold;"><%= @room&.name %></p>
+      <% if @roommates.any? %>
+        <p style="margin: 4px 0 0; color: #6b7280;">Sharing with: <%= @roommates.map(&:first_name).join(", ") %></p>
+      <% end %>
+    </div>
+
+    <%# ---- DAY BY DAY ---- %>
+    <h2 style="font-size: 18px; border-bottom: 2px solid #16a34a; padding-bottom: 8px; margin-top: 28px;">Day-by-Day Itinerary</h2>
+
+    <%# Wednesday %>
+    <div style="margin: 20px 0;">
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Wednesday, March 25 — Arrival Day</p>
+      <p style="margin: 8px 0 4px; color: #6b7280;">Get settled in, grab your room, and get ready for the week.</p>
+      <div style="margin: 8px 0; padding: 12px; background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold;">Dinner — 6:00 PM MST</p>
+        <p style="margin: 4px 0 0;">Team Rusty: <strong>The Mission Kierland</strong></p>
+        <p style="margin: 2px 0 0;">Team LT: <strong>Buck & Rider North</strong></p>
+        <a href="<%= @events[0][:calendar_url] %>" style="<%= cal_btn %> margin-right: 4px;">+ The Mission Kierland</a>
+        <a href="<%= @events[1][:calendar_url] %>" style="<%= cal_btn %>">+ Buck & Rider North</a>
+      </div>
+      <div style="margin: 8px 0; padding: 12px; background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold;">After Dinner — 8:00 PM MST</p>
+        <p style="margin: 4px 0 0;">Both teams meet up at <strong>DraftKings Sports Bar</strong></p>
+        <a href="<%= @events[2][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+    </div>
+
+    <%# Thursday %>
+    <div style="margin: 20px 0;">
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Thursday, March 26 — Round 1</p>
+      <div style="margin: 8px 0; padding: 12px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold;">Party Bus Pickup — 8:15 AM MST</p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Bus departs from the house to Quintero Golf Club. Don't be late!</p>
+        <a href="<%= @events[3][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+      <div style="margin: 8px 0; padding: 12px; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold; font-size: 15px;"><%= @golf_rounds[0]&.course&.name %></p>
+        <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[0]&.course&.address %></p>
+        <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[0]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[0]&.course&.par %> · <%= @golf_rounds[0]&.course&.yardage %> yards · Slope <%= @golf_rounds[0]&.course&.slope %></p>
+        <a href="<%= @events[4][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+      <div style="margin: 8px 0; padding: 12px; background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold;">Dinner — Hamburgers at the Casa</p>
+        <a href="<%= @events[7][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+    </div>
+
+    <%# Friday %>
+    <div style="margin: 20px 0;">
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Friday, March 27 — Round 2</p>
+      <div style="margin: 8px 0; padding: 12px; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold; font-size: 15px;"><%= @golf_rounds[1]&.course&.name %></p>
+        <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[1]&.course&.address %></p>
+        <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[1]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[1]&.course&.par %> · <%= @golf_rounds[1]&.course&.yardage %> yards · Slope <%= @golf_rounds[1]&.course&.slope %></p>
+        <p style="margin: 8px 0 0; color: #dc2626; font-size: 13px; font-weight: bold;">Players are responsible for their own Uber/Lyft to the course. Plan to arrive before tee time.</p>
+        <a href="<%= @events[5][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+      <p style="margin: 8px 0; color: #6b7280;">Dinner: Open night — explore Scottsdale!</p>
+    </div>
+
+    <%# Saturday %>
+    <div style="margin: 20px 0;">
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Saturday, March 28 — Round 3</p>
+      <div style="margin: 8px 0; padding: 12px; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold; font-size: 15px;"><%= @golf_rounds[2]&.course&.name %></p>
+        <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[2]&.course&.address %></p>
+        <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[2]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[2]&.course&.par %> · <%= @golf_rounds[2]&.course&.yardage %> yards · Slope <%= @golf_rounds[2]&.course&.slope %></p>
+        <p style="margin: 8px 0 0; color: #dc2626; font-size: 13px; font-weight: bold;">Players are responsible for their own Uber/Lyft to the course. Plan to arrive before tee time.</p>
+        <a href="<%= @events[6][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+      <p style="margin: 8px 0; color: #6b7280;">Dinner: Open night — explore Scottsdale!</p>
+    </div>
+
+    <%# Sunday %>
+    <div style="margin: 20px 0;">
+      <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Sunday, March 29 — Departure</p>
+      <p style="margin: 8px 0; color: #6b7280;">Safe travels home, boys.</p>
+    </div>
+
+    <%# Reminders %>
+    <div style="margin: 24px 0; padding: 16px; background-color: #fefce8; border: 1px solid #fde68a; border-radius: 8px;">
+      <p style="margin: 0 0 8px; font-weight: bold;">Don't Forget</p>
+      <ul style="margin: 0; padding-left: 20px; color: #6b7280;">
+        <li>Bring <strong>$500 cash</strong> for games (Team Bet $300, Skins $150, 2's $50)</li>
+        <li>Sunscreen — it's the desert</li>
+        <li>Check the attached course handicap sheet</li>
+      </ul>
+    </div>
+
+    <p style="margin: 16px 0 4px; color: #6b7280; font-size: 13px;">Apple Calendar or Outlook? Open the attached <strong>okie-cup-2026.ics</strong> file to add all events at once.</p>
+
+    <p>See you out there,<br>Duggan</p>
+  </div>
+</div>
