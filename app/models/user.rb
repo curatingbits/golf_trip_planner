@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
+  generates_token_for :password_reset, expires_in: 2.hours do
+    password_salt&.last(10)
+  end
   has_one_attached :avatar
 
   has_many :trip_registrations, dependent: :destroy

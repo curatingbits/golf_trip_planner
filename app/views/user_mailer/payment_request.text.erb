@@ -1,0 +1,26 @@
+<%= @trip.name %> - Payment Request
+
+Hey <%= @user.first_name %>,
+
+We're just one week out and it's almost go time! Get ready for some competitive golf, great company, and Scottsdale sunshine. This one's going to be a blast.
+
+<% if @room_balance > 0 %>
+Here's your remaining balance for the trip:
+
+Room (<%= @room_name %>): <%= number_to_currency(@room_cost) %>
+Deposit paid: -<%= number_to_currency(@deposit_credit) %>
+---
+Balance Due: <%= number_to_currency(@room_balance) %>
+
+Send payment via Venmo: https://venmo.com/drobsokc
+<% else %>
+Your room balance is paid in full. You're all set!
+<% end %>
+
+CASH GAMES - Bring $500 Cash
+  Team Bet: $300
+  Skins:    $150
+  2's:       $50
+
+Thanks,
+Duggan
