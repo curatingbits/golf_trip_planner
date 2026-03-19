@@ -5,8 +5,12 @@ Hey <%= @user.first_name %>,
 
 The countdown is on! Here's everything you need to know for next week. Three incredible courses, perfect Arizona weather, and a house full of guys ready to compete. Let's make this one count.
 
-YOUR ROOM
+THE HOUSE
 <%= @accommodation&.name %>
+6127 East Sweetwater Avenue, Scottsdale, AZ 85254
+https://maps.apple.com/?address=6127+East+Sweetwater+Avenue,+Scottsdale,+Arizona+85254
+
+YOUR ROOM
 <%= @room&.name %><% if @roommates.any? %>
 Sharing with: <%= @roommates.map(&:first_name).join(", ") %><% end %>
 
@@ -21,19 +25,28 @@ After Dinner — 8:00 PM MST
   Both teams meet up at DraftKings Sports Bar
 
 THURSDAY, MARCH 26 — Round 1
-Party Bus Pickup: 8:15 AM MST — Bus departs from the house to Quintero Golf Club. Don't be late!
 <%= @golf_rounds[0]&.course&.name %>
 <%= @golf_rounds[0]&.course&.address %>
 Tee Time: <%= @golf_rounds[0]&.tee_time&.strftime("%-I:%M %p") %> MST
 Par <%= @golf_rounds[0]&.course&.par %> · <%= @golf_rounds[0]&.course&.yardage %> yards · Slope <%= @golf_rounds[0]&.course&.slope %>
+Cost: <%= number_to_currency(@golf_rounds[0]&.cost_per_person) %> per player
+** Uber/Lyft required — plan to arrive before tee time.
+
+Round 1 Pairings:
+  Rusty / Bill  vs  Rich / Delval
+  Chevy / Gurss  vs  LT / Duggan
+  Patzke / Litton  vs  Wick / Nate
+  PC / Woodall  vs  Bax / Cudd
+
 Dinner: Hamburgers at the Casa
 
 FRIDAY, MARCH 27 — Round 2
+Party Bus Pickup: 8:15 AM MST — Bus departs from the house to Quintero Golf Club. Don't be late!
 <%= @golf_rounds[1]&.course&.name %>
 <%= @golf_rounds[1]&.course&.address %>
 Tee Time: <%= @golf_rounds[1]&.tee_time&.strftime("%-I:%M %p") %> MST
 Par <%= @golf_rounds[1]&.course&.par %> · <%= @golf_rounds[1]&.course&.yardage %> yards · Slope <%= @golf_rounds[1]&.course&.slope %>
-** Uber/Lyft required — plan to arrive before tee time.
+Cost: <%= number_to_currency(@golf_rounds[1]&.cost_per_person) %> per player
 Dinner: Open night — explore Scottsdale!
 
 SATURDAY, MARCH 28 — Round 3
@@ -41,6 +54,7 @@ SATURDAY, MARCH 28 — Round 3
 <%= @golf_rounds[2]&.course&.address %>
 Tee Time: <%= @golf_rounds[2]&.tee_time&.strftime("%-I:%M %p") %> MST
 Par <%= @golf_rounds[2]&.course&.par %> · <%= @golf_rounds[2]&.course&.yardage %> yards · Slope <%= @golf_rounds[2]&.course&.slope %>
+Cost: <%= number_to_currency(@golf_rounds[2]&.cost_per_person) %> per player
 ** Uber/Lyft required — plan to arrive before tee time.
 Dinner: Open night — explore Scottsdale!
 
@@ -53,6 +67,20 @@ DON'T FORGET
 - Bring $500 cash for games (Team Bet $300, Skins $150, 2's $50)
 - Sunscreen — it's the desert
 - Check the attached course handicap sheet
+
+HOUSE RULES
+
+Check-in Instructions
+Check-in instructions will be sent the day of arrival and your door code access will be provided 1 hour prior to check in. If you have not already secured early check-in, pool heat, or late check-out, please feel free to message us for availability and associated fees.
+
+Home Essentials
+To get you started on your vacation we provide each home with a Housekeeping Starter Kit which includes several rolls of paper towels, dishwasher pods, dishwashing soap, trash bags, laundry pods, several rolls of toilet paper per restroom, shampoo, conditioner, and body wash dispensers in all the showers. Towel sets and pool towels are included on each bed.
+
+Kitchen & Coffee
+All of our homes are equipped with full kitchens along with standard cookware and glassware. We do not provide any food essentials such as oils and spices. With this in mind, we recommend bringing your supplies and everything you need on vacation. Each home has a coffee maker/keurig. We supply filters and several coffee pods to get you started your first morning.
+
+Noise Ordinance
+Noise levels are monitored during quiet hours from 10pm to 8am. Please note there is a city ordinance monitored by code enforcement that prohibits parties in vacation rentals. If a noise complaint is made, A FEE OF $1,000.00 WILL BE ASSESSED, and TENANTS MAY BE ASKED TO VACATE PROPERTY, WITH NO REFUNDS. If the police are contacted by neighbors, it could result in A FINE OF UP TO $5,000.00 and IMMEDIATE EVICTION WITH NO REFUNDS.
 
 See you out there,
 Duggan

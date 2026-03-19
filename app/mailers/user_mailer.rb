@@ -74,9 +74,9 @@ class UserMailer < ApplicationMailer
     events << { title: "DraftKings Sports Bar", location: "DraftKings Sports Bar, Scottsdale, AZ",
                 start_time: Time.utc(2026, 3, 25, 20, 0), end_time: Time.utc(2026, 3, 25, 23, 0) }
 
-    # Thursday party bus
+    # Friday party bus
     events << { title: "Party Bus Pickup — Quintero Golf Club", location: @accommodation&.name.to_s + ", Scottsdale, AZ",
-                start_time: Time.utc(2026, 3, 26, 8, 15), end_time: Time.utc(2026, 3, 26, 9, 30),
+                start_time: Time.utc(2026, 3, 27, 8, 15), end_time: Time.utc(2026, 3, 27, 9, 30),
                 description: "Party bus to Quintero Golf Club" }
 
     # Golf rounds

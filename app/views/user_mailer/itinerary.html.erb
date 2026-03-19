@@ -11,11 +11,13 @@
 
     <p>The countdown is on! Here's everything you need to know for next week. Three incredible courses, perfect Arizona weather, and a house full of guys ready to compete. Let's make this one count.</p>
 
-    <%# ---- ROOM ASSIGNMENT ---- %>
+    <%# ---- HOUSE & ROOM ---- %>
     <div style="margin: 24px 0; padding: 16px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
-      <p style="margin: 0 0 4px; font-weight: bold; font-size: 16px;">Your Room</p>
+      <p style="margin: 0 0 4px; font-weight: bold; font-size: 16px;">The House</p>
       <p style="margin: 0; color: #6b7280;"><%= @accommodation&.name %></p>
-      <p style="margin: 8px 0 0; font-size: 18px; font-weight: bold;"><%= @room&.name %></p>
+      <p style="margin: 4px 0 0;"><a href="https://maps.apple.com/?address=6127+East+Sweetwater+Avenue,+Scottsdale,+Arizona+85254" style="color: #16a34a; text-decoration: none;">6127 East Sweetwater Avenue, Scottsdale, AZ 85254</a></p>
+      <p style="margin: 12px 0 4px; font-weight: bold; font-size: 16px;">Your Room</p>
+      <p style="margin: 0; font-size: 18px; font-weight: bold;"><%= @room&.name %></p>
       <% if @roommates.any? %>
         <p style="margin: 4px 0 0; color: #6b7280;">Sharing with: <%= @roommates.map(&:first_name).join(", ") %></p>
       <% end %>
@@ -45,17 +47,39 @@
     <%# Thursday %>
     <div style="margin: 20px 0;">
       <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Thursday, March 26 — Round 1</p>
-      <div style="margin: 8px 0; padding: 12px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
-        <p style="margin: 0; font-weight: bold;">Party Bus Pickup — 8:15 AM MST</p>
-        <p style="margin: 4px 0 0; color: #6b7280;">Bus departs from the house to Quintero Golf Club. Don't be late!</p>
-        <a href="<%= @events[3][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
-      </div>
       <div style="margin: 8px 0; padding: 12px; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
         <p style="margin: 0; font-weight: bold; font-size: 15px;"><%= @golf_rounds[0]&.course&.name %></p>
         <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[0]&.course&.address %></p>
         <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[0]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
         <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[0]&.course&.par %> · <%= @golf_rounds[0]&.course&.yardage %> yards · Slope <%= @golf_rounds[0]&.course&.slope %></p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Cost: <strong><%= number_to_currency(@golf_rounds[0]&.cost_per_person) %></strong> per player</p>
+        <p style="margin: 8px 0 0; color: #dc2626; font-size: 13px; font-weight: bold;">Players are responsible for their own Uber/Lyft to the course. Plan to arrive before tee time.</p>
         <a href="<%= @events[4][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
+      <div style="margin: 8px 0; padding: 12px; background-color: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 4px;">
+        <p style="margin: 0 0 8px; font-weight: bold;">Round 1 Pairings</p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <tr style="border-bottom: 1px solid #bbf7d0;">
+            <td style="padding: 4px 0;">Rusty / Bill</td>
+            <td style="padding: 4px 8px; color: #6b7280;">vs</td>
+            <td style="padding: 4px 0;">Rich / Delval</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #bbf7d0;">
+            <td style="padding: 4px 0;">Chevy / Gurss</td>
+            <td style="padding: 4px 8px; color: #6b7280;">vs</td>
+            <td style="padding: 4px 0;">LT / Duggan</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #bbf7d0;">
+            <td style="padding: 4px 0;">Patzke / Litton</td>
+            <td style="padding: 4px 8px; color: #6b7280;">vs</td>
+            <td style="padding: 4px 0;">Wick / Nate</td>
+          </tr>
+          <tr>
+            <td style="padding: 4px 0;">PC / Woodall</td>
+            <td style="padding: 4px 8px; color: #6b7280;">vs</td>
+            <td style="padding: 4px 0;">Bax / Cudd</td>
+          </tr>
+        </table>
       </div>
       <div style="margin: 8px 0; padding: 12px; background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 4px;">
         <p style="margin: 0; font-weight: bold;">Dinner — Hamburgers at the Casa</p>
@@ -66,12 +90,17 @@
     <%# Friday %>
     <div style="margin: 20px 0;">
       <p style="margin: 0; font-weight: bold; font-size: 16px; color: #16a34a;">Friday, March 27 — Round 2</p>
+      <div style="margin: 8px 0; padding: 12px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold;">Party Bus Pickup — 8:15 AM MST</p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Bus departs from the house to Quintero Golf Club. Don't be late!</p>
+        <a href="<%= @events[3][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
+      </div>
       <div style="margin: 8px 0; padding: 12px; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
         <p style="margin: 0; font-weight: bold; font-size: 15px;"><%= @golf_rounds[1]&.course&.name %></p>
         <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[1]&.course&.address %></p>
         <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[1]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
         <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[1]&.course&.par %> · <%= @golf_rounds[1]&.course&.yardage %> yards · Slope <%= @golf_rounds[1]&.course&.slope %></p>
-        <p style="margin: 8px 0 0; color: #dc2626; font-size: 13px; font-weight: bold;">Players are responsible for their own Uber/Lyft to the course. Plan to arrive before tee time.</p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Cost: <strong><%= number_to_currency(@golf_rounds[1]&.cost_per_person) %></strong> per player</p>
         <a href="<%= @events[5][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
       </div>
       <p style="margin: 8px 0; color: #6b7280;">Dinner: Open night — explore Scottsdale!</p>
@@ -85,6 +114,7 @@
         <p style="margin: 4px 0 0; color: #6b7280;"><%= @golf_rounds[2]&.course&.address %></p>
         <p style="margin: 4px 0 0;">Tee Time: <strong><%= @golf_rounds[2]&.tee_time&.strftime("%-I:%M %p") %> MST</strong></p>
         <p style="margin: 4px 0 0; color: #6b7280;">Par <%= @golf_rounds[2]&.course&.par %> · <%= @golf_rounds[2]&.course&.yardage %> yards · Slope <%= @golf_rounds[2]&.course&.slope %></p>
+        <p style="margin: 4px 0 0; color: #6b7280;">Cost: <strong><%= number_to_currency(@golf_rounds[2]&.cost_per_person) %></strong> per player</p>
         <p style="margin: 8px 0 0; color: #dc2626; font-size: 13px; font-weight: bold;">Players are responsible for their own Uber/Lyft to the course. Plan to arrive before tee time.</p>
         <a href="<%= @events[6][:calendar_url] %>" style="<%= cal_btn %>">+ Add to Calendar</a>
       </div>
@@ -105,6 +135,23 @@
         <li>Sunscreen — it's the desert</li>
         <li>Check the attached course handicap sheet</li>
       </ul>
+    </div>
+
+    <%# ---- HOUSE RULES ---- %>
+    <div style="margin: 24px 0; padding: 16px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
+      <p style="margin: 0 0 12px; font-weight: bold; font-size: 16px;">House Rules</p>
+
+      <p style="margin: 0 0 4px; font-weight: bold;">Check-in Instructions</p>
+      <p style="margin: 0 0 12px; color: #6b7280;">Check-in instructions will be sent the day of arrival and your door code access will be provided 1 hour prior to check in. If you have not already secured early check-in, pool heat, or late check-out, please feel free to message us for availability and associated fees.</p>
+
+      <p style="margin: 0 0 4px; font-weight: bold;">Home Essentials</p>
+      <p style="margin: 0 0 12px; color: #6b7280;">To get you started on your vacation we provide each home with a Housekeeping Starter Kit which includes several rolls of paper towels, dishwasher pods, dishwashing soap, trash bags, laundry pods, several rolls of toilet paper per restroom, shampoo, conditioner, and body wash dispensers in all the showers. Towel sets and pool towels are included on each bed.</p>
+
+      <p style="margin: 0 0 4px; font-weight: bold;">Kitchen & Coffee</p>
+      <p style="margin: 0 0 12px; color: #6b7280;">All of our homes are equipped with full kitchens along with standard cookware and glassware. We do not provide any food essentials such as oils and spices. With this in mind, we recommend bringing your supplies and everything you need on vacation. Each home has a coffee maker/keurig. We supply filters and several coffee pods to get you started your first morning.</p>
+
+      <p style="margin: 0 0 4px; font-weight: bold;">Noise Ordinance</p>
+      <p style="margin: 0 0 0; color: #6b7280;">Noise levels are monitored during quiet hours from 10pm to 8am. Please note there is a city ordinance monitored by code enforcement that prohibits parties in vacation rentals. If a noise complaint is made, <strong>a fee of $1,000.00 will be assessed</strong>, and <strong>tenants may be asked to vacate property, with no refunds</strong>. If the police are contacted by neighbors, it could result in <strong>a fine of up to $5,000.00</strong> and <strong>immediate eviction with no refunds</strong>.</p>
     </div>
 
     <p style="margin: 16px 0 4px; color: #6b7280; font-size: 13px;">Apple Calendar or Outlook? Open the attached <strong>okie-cup-2026.ics</strong> file to add all events at once.</p>
