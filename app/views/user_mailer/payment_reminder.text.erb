@@ -1,0 +1,15 @@
+<%= @trip.name %> - Payment Reminder
+
+Hey <%= @user.first_name %>,
+
+Just a friendly reminder — we're less than a week out and I still show an outstanding balance on your room. If you could get this squared away before we head to Scottsdale, that would be great.
+
+Room (<%= @room_name %>): <%= number_to_currency(@room_cost) %>
+Deposit paid: -<%= number_to_currency(@deposit_credit) %>
+---
+Balance Due: <%= number_to_currency(@room_balance) %>
+
+Send payment via Venmo: https://venmo.com/drobsokc
+
+Thanks,
+Duggan

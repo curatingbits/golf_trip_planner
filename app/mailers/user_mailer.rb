@@ -31,6 +31,19 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: "Payment Request - #{trip.name}")
   end
 
+  def payment_reminder(user, trip)
+    @user = user
+    @trip = trip
+    @registration = user.trip_registrations.find_by(trip: trip)
+    room = user.room_for_trip(trip)
+    @room_name = room&.name
+    @room_cost = room&.cost_per_person || 0
+    @deposit_credit = (@registration&.deposit_paid? && trip.requires_deposit?) ? trip.deposit_amount : 0
+    @room_balance = @registration&.room_paid? ? 0 : [@room_cost - @deposit_credit, 0].max
+
+    mail(to: @user.email, subject: "Payment Reminder - #{trip.name}")
+  end
+
   def itinerary(user, trip)
     @user = user
     @trip = trip
